@@ -1,7 +1,7 @@
-unique template personality/neutron/controller;
+unique template features/neutron-controller/config;
 
 # Install RPMs for compute part of neutron
-include 'personality/neutron/rpms/controller';
+include 'features/neutron-controller/rpms/controller';
 include 'features/httpd/config';
 include 'features/memcache/config';
 

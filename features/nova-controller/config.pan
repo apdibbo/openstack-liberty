@@ -1,7 +1,7 @@
-unique template personality/nova/controller;
+unique template features/nova-controller/config;
 
 # Install RPMs for compute part of neutron
-include 'personality/nova/rpms/controller';
+include 'personality/nova-controller/rpms/controller';
 
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';

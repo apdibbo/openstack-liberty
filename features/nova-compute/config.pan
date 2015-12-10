@@ -1,8 +1,8 @@
-unique template personality/nova/compute;
+unique template features/nova-compute/config;
 
 
 # Include RPMS for nova hypervisor configuration
-include 'personality/nova/rpms/compute';
+include 'features/nova-compute/rpms/compute';
 
 
 # Restart nova specific daemon
