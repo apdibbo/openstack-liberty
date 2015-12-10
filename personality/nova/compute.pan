@@ -17,6 +17,8 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
+'daemons/openstack-nova-compute'='restart';
+'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT/verbose' = 'True';
