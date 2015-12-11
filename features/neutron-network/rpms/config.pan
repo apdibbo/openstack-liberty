@@ -1,4 +1,4 @@
-unique template features/neutron/rpms/controller;
+unique template features/neutron/rpms/config;
 
 prefix '/software/packages';
 '{openstack-neutron}' ?= dict();

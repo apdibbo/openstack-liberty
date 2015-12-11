@@ -1,8 +1,6 @@
-unique template features/neutron/rpms/compute;
+unique template features/neutron/rpms/linuxbridge;
 
 prefix '/software/packages';
-# Install Neutron Hypervisor part
-'{openstack-neutron}' ?= dict();
 '{openstack-neutron-linuxbridge}' ?= dict();
 '{ebtables}' ?= dict();
 '{ipset}' ?= dict();
