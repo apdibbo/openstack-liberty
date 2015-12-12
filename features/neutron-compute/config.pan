@@ -1,13 +1,7 @@
 unique template features/neutron-compute/config;
 
 # Install RPMs for compute part of neutron
-include 'features/neutron-compute/rpms/compute';
-
-# Restart neutron specific daemon
-include 'components/chkconfig/config';
-prefix '/software/components/chkconfig/service';
-'neutron-linuxbridge-agent/on' = '';
-'neutron-linuxbridge-agent/startstop' = true;
+include 'features/neutron-compute/rpms/config';
 
 # Configuration file for neutron
 include 'components/metaconfig/config';
@@ -36,23 +30,8 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
 'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
 
-# Configuration file for linuxbridge_agent.ini
-prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/linuxbridge_agent.ini}';
-'module' = 'tiny';
-
-# [linux_bridge] section
-#TODO: eth0 must be compute
-'contents/linux_bridge/physical_interface_mappings' = 'public:' + OS_INTERFACE_MAPPING;
-
-# [vxlan] section
-'contents/vxlan/enable_vxlan' = 'False';
-
-# [agent] section
-'contents/agent/prevent_arp_spoofing' = 'True';
-
-# [securitygroup] section
-'contents/securitygroup/enable_security_group' = 'True';
-'contents/securitygroup/firewall_driver' = 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver';
+# network driver configuration
+include 'features/neutron-compute/'+OS_NEUTRON_NETWORK_TYPE;
 
 # Create symlink from /etc/neutron/plugins/ml2/ml2_conf.ini to /etc/neutron/plugin.ini
 include 'components/symlink/config';
