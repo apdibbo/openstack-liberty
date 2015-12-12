@@ -8,5 +8,6 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/httpd/conf.d/01-servername.conf}';
 'module' = 'general';
+'daemons/httpd' = 'restart';
 
 'contents/ServerName' = OS_KEYSTONE_CONTROLLER_HOST;

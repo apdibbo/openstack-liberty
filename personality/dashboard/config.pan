@@ -1,3 +1,3 @@
 unique template personality/dashboard/config;
 
-include 'personality/dashboard/rpms/config';
+include 'features/dashboard/config';

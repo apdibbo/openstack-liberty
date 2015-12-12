@@ -1,7 +1,7 @@
-unique template personality/neutron/compute;
+unique template features/neutron-compute/config;
 
 # Install RPMs for compute part of neutron
-include 'personality/neutron/rpms/compute';
+include 'features/neutron-compute/rpms/compute';
 
 # Restart neutron specific daemon
 include 'components/chkconfig/config';
