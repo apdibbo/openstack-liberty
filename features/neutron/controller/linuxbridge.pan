@@ -1,6 +1,6 @@
-template features/neutron-controller/linuxbridge;
+template features/neutron/controller/linuxbridge;
 
-include 'features/neutron-controller/rpms/linuxbridge';
+include 'features/neutron/controller/rpms/linuxbridge';
 
 # /etc/neutron/plugins/ml2/ml2_conf.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/ml2_conf.ini}';

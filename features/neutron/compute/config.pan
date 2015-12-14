@@ -1,7 +1,7 @@
-unique template features/neutron-compute/config;
+unique template features/neutron/compute/config;
 
 # Install RPMs for compute part of neutron
-include 'features/neutron-compute/rpms/config';
+include 'features/neutron/compute/rpms/config';
 
 # Configuration file for neutron
 include 'components/metaconfig/config';

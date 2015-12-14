@@ -1,7 +1,7 @@
-unique template features/neutron-network/config;
+unique template features/neutron/network/config;
 
 # Install RPMs for compute part of neutron
-include 'features/neutron-network/rpms/config';
+include 'features/neutron/network/rpms/config';
 include 'features/httpd/config';
 include 'features/memcache/config';
 

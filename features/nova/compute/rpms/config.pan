@@ -1,4 +1,4 @@
-unique template features/nova/rpms/compute;
+unique template features/nova/compute/rpms/config;
 
 prefix '/software/packages';
 '{openstack-nova-compute}' ?= dict();

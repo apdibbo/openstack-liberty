@@ -1,6 +1,6 @@
-template features/neutron-compute/linuxbridge;
+template features/neutron/compute/linuxbridge;
 
-include 'features/neutron-compute/rpms/linuxbridge';
+include 'features/neutron/compute/rpms/linuxbridge';
 
 # Restart neutron specific daemon
 include 'components/chkconfig/config';

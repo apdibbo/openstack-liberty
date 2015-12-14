@@ -1,6 +1,6 @@
-template features/neutron-network/linuxbridge;
+template features/neutron/network/linuxbridge;
 
-include 'features/neutron-network/rpms/linuxbridge';
+include 'features/neutron/network/rpms/linuxbridge';
 
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';
