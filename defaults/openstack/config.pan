@@ -21,6 +21,11 @@ variable OS_USERNAME ?= 'admin';
 variable OS_PASSWORD ?= 'admin';
 variable OS_METADATA_SECRET ?= error('OS_METADATA_SECRET must be declared');
 
+##########################################
+# NODE_TYPE is 'compute' or 'controller' #
+##########################################
+variable OS_NODE_TYPE ?= 'compute';
+
 ###############################
 # Define OS_CONTROLLER_HOST  #
 ##############################
@@ -88,7 +93,7 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
-variable OS_NEUTRON_NETWORK_TYPE ?= 'linuxbridge';
+variable OS_NEUTRON_NETWORK_DRIVER ?= 'linuxbridge';
 
 ##############################
 # RabbitMQ specific variable #

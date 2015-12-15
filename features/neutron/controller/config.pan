@@ -2,8 +2,13 @@ unique template features/neutron/controller/config;
 
 # Install RPMs for compute part of neutron
 include 'features/neutron/controller/rpms/config';
+
+# Configure some usefull package for neutron
 include 'features/httpd/config';
 include 'features/memcache/config';
+
+# network driver configuration
+include 'features/neutron/controller/'+OS_NEUTRON_NETWORK_DRIVER;
 
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';
@@ -57,9 +62,6 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
 'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
 'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
-
-# network driver configuration
-include 'features/neutron/controller/'+OS_NEUTRON_NETWORK_TYPE;
 
 # Create symlink from /etc/neutron/plugins/ml2/ml2_conf.ini to /etc/neutron/plugin.ini
 include 'components/symlink/config';
