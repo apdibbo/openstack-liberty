@@ -1,5 +1,14 @@
 unique template features/neutron/network/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 # Install RPMs for compute part of neutron
 include 'features/neutron/network/rpms/config';
 
@@ -51,4 +60,3 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/metadata_agent.in
 'contents/DEFAULT/nova_metadata_ip' = OS_METADATA_HOST;
 'contents/DEFAULT/metadata_proxy_shared_secret' = OS_METADATA_SECRET;
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
-

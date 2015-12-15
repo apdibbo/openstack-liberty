@@ -1,5 +1,14 @@
 unique template features/nova/compute/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 
 # Include RPMS for nova hypervisor configuration
 include 'features/nova/compute/rpms/config';
