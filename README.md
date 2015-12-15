@@ -6,6 +6,7 @@
 
 ## Usage
 * Create a template site/openstack/config
+
 The following variables is mandatory
 * OS_CONTROLLER_HOST : name of controller
 * OS_METADATA_SECRET : used as a shared secret for metadata
