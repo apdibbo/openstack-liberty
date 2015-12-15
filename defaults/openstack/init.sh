@@ -71,6 +71,7 @@ $DEBUG_DATABASES su -s /bin/sh -c "nova-manage db sync" nova
 echo "[DONE] Database configuration"
 
 echo "[START] service configuration"
+systemctl start openstack-keystone
 echo "  keystone"
 $DEBUG_SERVICES openstack service create --name keystone --description "Openstack Identity" identity
 echo "  glance"

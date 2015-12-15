@@ -16,7 +16,7 @@ prefix '/software/components/filecopy/services';
 
 variable CONTENTS_INIT_SCRIPT = {
   if (OS_NEUTRON_DEFAULT) {
-    file_contents('defaults/openstack/init.sh') + file_contents('defaults/openstack/init.sh');
+    file_contents('defaults/openstack/init.sh') + file_contents('defaults/openstack/init-network.sh');
   } else {
     file_contents('defaults/openstack/init.sh');
   };
