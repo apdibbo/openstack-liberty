@@ -24,7 +24,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/rcp_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
-'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
+'contents/DEFAULT/my_ip' = PRIMARY_IP;
 'contents/DEFAULT/network_api_class' = 'nova.network.neutronv2.api.API';
 'contents/DEFAULT/security_group_api' = 'neutron';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';
