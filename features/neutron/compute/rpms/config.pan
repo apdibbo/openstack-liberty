@@ -1,4 +1,4 @@
-unique template features/neutron/rpms/config;
+unique template features/neutron/compute/rpms/config;
 
 prefix '/software/packages';
 # Install Neutron Hypervisor part

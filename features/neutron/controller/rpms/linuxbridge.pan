@@ -1,4 +1,4 @@
-template features/neutron-network/rpms/linuxbridge;
+template features/neutron/controller/rpms/linuxbridge;
 
 prefix '/software/packages';
 '{openstack-neutron-linuxbridge}' ?= dict();

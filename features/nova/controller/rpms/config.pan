@@ -1,4 +1,4 @@
-unique template features/nova/rpms/controller;
+unique template features/nova/controller/rpms/config;
 
 prefix '/software/packages';
 '{openstack-nova-api}' ?= dict();
