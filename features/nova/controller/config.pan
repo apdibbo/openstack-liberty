@@ -30,12 +30,12 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-api'='restart';
-'daemons/openstack-nova-cert'='restart';
-'daemons/openstack-nova-consoleauth'='restart';
-'daemons/openstack-nova-scheduler'='restart';
-'daemons/openstack-nova-conductor'='restart';
-'daemons/openstack-nova-novncproxy'='restart';
+#'daemons/openstack-nova-api'='restart';
+#'daemons/openstack-nova-cert'='restart';
+#'daemons/openstack-nova-consoleauth'='restart';
+#'daemons/openstack-nova-scheduler'='restart';
+#'daemons/openstack-nova-conductor'='restart';
+#'daemons/openstack-nova-novncproxy'='restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';

@@ -22,7 +22,7 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 'module' = 'tiny';
-'daemons/openstack-glance-api' = 'restart';
+#'daemons/openstack-glance-api' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
@@ -47,7 +47,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 
 prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.conf}';
 'module' = 'tiny';
-'daemons/openstack-glance-registry' = 'restart';
+#'daemons/openstack-glance-registry' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
