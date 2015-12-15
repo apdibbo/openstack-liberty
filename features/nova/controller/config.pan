@@ -1,7 +1,7 @@
-unique template personality/nova/controller;
+unique template features/nova/controller/config;
 
 # Install RPMs for compute part of neutron
-include 'personality/nova/rpms/controller';
+include 'features/nova/controller/rpms/config';
 
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';
@@ -21,6 +21,12 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
+'daemons/openstack-nova-api'='restart';
+'daemons/openstack-nova-cert'='restart';
+'daemons/openstack-nova-consoleauth'='restart';
+'daemons/openstack-nova-scheduler'='restart';
+'daemons/openstack-nova-conductor'='restart';
+'daemons/openstack-nova-novncproxy'='restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
@@ -30,7 +36,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';
 'contents/DEFAULT/firewall_driver' = 'nova.virt.firewall.NoopFirewallDriver';
 'contents/DEFAULT/enabled_apis' = 'osapi_compute,metadata';
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -42,12 +48,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_authtoken/project_domain_id' = 'default';
-'contents/keystone_authtoken/user_domain_id' = 'default';
-'contents/keystone_authtoken/project_name' = 'service';
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/keystone_authtoken/username' = OS_NOVA_USERNAME;
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 

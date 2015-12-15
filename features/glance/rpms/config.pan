@@ -1,4 +1,4 @@
-unique template personality/glance/rpms/config;
+unique template features/glance/rpms/config;
 
 prefix '/software/packages';
 'python-glanceclient' ?= dict();

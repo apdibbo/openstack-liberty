@@ -1,6 +1,8 @@
 unique template machine-types/cloud/base;
 
 include 'machine-types/core';
+# Load some usefull functions
+include 'defaults/openstack/functions';
 
 # Include general openstack variables
 include 'defaults/openstack/config';

@@ -1,8 +1,8 @@
-unique template personality/nova/compute;
+unique template features/nova/compute/config;
 
 
 # Include RPMS for nova hypervisor configuration
-include 'personality/nova/rpms/compute';
+include 'features/nova/compute/rpms/config';
 
 
 # Restart nova specific daemon
@@ -17,9 +17,11 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
+'daemons/openstack-nova-compute'='restart';
+'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/rcp_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
 'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
@@ -32,14 +34,9 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_auth/project_domain_id' = 'default';
-'contents/keystone_auth/user_domain_id' = 'default';
-'contents/keystone_auth/project_name' = 'service';
-'contents/keystone_auth/username' = OS_NOVA_USERNAME;
-'contents/keystone_auth/password' = OS_NOVA_PASSWORD;
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
+'contents/keystone_authtoken/username' = OS_NOVA_USERNAME;
+'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [libvirtd] section
 'contents/libvirt/virt_type' = 'qemu';

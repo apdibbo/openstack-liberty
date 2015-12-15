@@ -1,9 +1,8 @@
-unique template personality/neutron/rpms/controller;
+unique template features/neutron/compute/rpms/config;
 
 prefix '/software/packages';
+# Install Neutron Hypervisor part
 '{openstack-neutron}' ?= dict();
 '{openstack-neutron-linuxbridge}' ?= dict();
-'{openstack-neutron-ml2}' ?= dict();
-'{python-neutronclient}' ?= dict();
 '{ebtables}' ?= dict();
 '{ipset}' ?= dict();
