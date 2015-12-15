@@ -88,7 +88,7 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
-variable OS_NEUTRON_NETWORK_TYPE ?= 'linuxbridge'
+variable OS_NEUTRON_NETWORK_TYPE ?= 'linuxbridge';
 
 ##############################
 # RabbitMQ specific variable #

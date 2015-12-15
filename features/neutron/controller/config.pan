@@ -59,7 +59,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
 
 # network driver configuration
-include 'features/neutron-controller/'+OS_NEUTRON_NETWORK_TYPE;
+include 'features/neutron/controller/'+OS_NEUTRON_NETWORK_TYPE;
 
 # Create symlink from /etc/neutron/plugins/ml2/ml2_conf.ini to /etc/neutron/plugin.ini
 include 'components/symlink/config';

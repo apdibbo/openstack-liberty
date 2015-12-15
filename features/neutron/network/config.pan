@@ -38,7 +38,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
 
 # network driver configuration
-include 'features/neutron-network/'+OS_NEUTRON_NETWORK_TYPE;
+include 'features/neutron/network/'+OS_NEUTRON_NETWORK_TYPE;
 
 # /etc/neutron/metadata_agent.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/metadata_agent.ini}';

@@ -10,7 +10,7 @@ include 'personality/keystone/config';
 include 'personality/glance/config';
 include 'personality/nova/config';
 include 'personality/neutron/config';
-include 'features/neutron-network/config'
+include 'features/neutron/network/config';
 include 'personality/dashboard/config';
 
 include 'defaults/openstack/utils';
