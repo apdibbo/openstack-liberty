@@ -50,4 +50,4 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/dhcp_agent.ini}';
 'contents/DEFAULT/interface_driver' = 'neutron.agent.linux.interface.BridgeInterfaceDriver';
 'contents/DEFAULT/dhcp_driver' = 'neutron.agent.linux.dhcp.Dnsmasq';
 'contents/DEFAULT/enable_isolated_metadata' = 'True';
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);

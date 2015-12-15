@@ -16,7 +16,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 'daemons/openstack-glance-api' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -46,7 +46,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 'daemons/openstack-glance-registry' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [database] section
 'contents/database/connection' = 'mysql://' +

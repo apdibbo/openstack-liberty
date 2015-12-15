@@ -20,7 +20,7 @@ include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'module' = 'tiny';
 # [DEFAULT]
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/core_plugin' = 'ml2';
 'contents/DEFAULT/service_plugins' = 'router';
 'contents/DEFAULT/allow_overlapping_ips' = 'True';
@@ -57,7 +57,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/metadata_agent.in
 'contents/DEFAULT/password' = OS_NEUTRON_PASSWORD;
 'contents/DEFAULT/nova_metadata_ip' = OS_METADATA_HOST;
 'contents/DEFAULT/metadata_proxy_shared_secret' = OS_METADATA_SECRET;
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # Create symlink from /etc/neutron/plugins/ml2/ml2_conf.ini to /etc/neutron/plugin.ini
 include 'components/symlink/config';

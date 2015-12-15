@@ -13,7 +13,7 @@ prefix '/software/components/metaconfig/services/{/etc/keystone/keystone.conf}';
 
 # [DEFAULT] section
 'contents/DEFAULT/admin_token' ?= OS_ADMIN_TOKEN;
-'contents/DEFAULT/verbose' ?= 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [database] section
 'contents/database/connection' = 'mysql://' +

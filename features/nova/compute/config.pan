@@ -21,7 +21,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/rcp_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
 'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];

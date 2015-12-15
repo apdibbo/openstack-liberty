@@ -25,6 +25,8 @@ variable OS_METADATA_SECRET ?= error('OS_METADATA_SECRET must be declared');
 # NODE_TYPE is 'compute' or 'controller' #
 ##########################################
 variable OS_NODE_TYPE ?= 'compute';
+#
+variable OS_LOGGING_TYPE ?= 'file';
 
 ###############################
 # Define OS_CONTROLLER_HOST  #

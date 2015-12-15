@@ -14,7 +14,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 # [DEFAULT] section
 'contents/DEFAULT/auth_strategy' = 'keystone';
 'contents/DEFAULT/rpc_backend' = 'rabbit';
-'contents/DEFAULT/verbose' = 'True';
+'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
