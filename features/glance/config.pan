@@ -29,12 +29,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 'contents/glance_store/filesystem_store_datadir' = '/var/lib/glance/images/';
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_authtoken/project_domain_id' = 'default';
-'contents/keystone_authtoken/user_domain_id' = 'default';
-'contents/keystone_authtoken/project_name' = 'service';
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/keystone_authtoken/username' = OS_GLANCE_USERNAME;
 'contents/keystone_authtoken/password' = OS_GLANCE_PASSWORD;
 
@@ -55,12 +50,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
   OS_GLANCE_DB_HOST + '/glance';
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_authtoken/project_domain_id' = 'default';
-'contents/keystone_authtoken/user_domain_id' = 'default';
-'contents/keystone_authtoken/project_name' = 'service';
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/keystone_authtoken/username' = OS_GLANCE_USERNAME;
 'contents/keystone_authtoken/password' = OS_GLANCE_PASSWORD;
 

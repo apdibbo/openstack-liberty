@@ -48,12 +48,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_authtoken/project_domain_id' = 'default';
-'contents/keystone_authtoken/user_domain_id' = 'default';
-'contents/keystone_authtoken/project_name' = 'service';
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/keystone_authtoken/username' = OS_NOVA_USERNAME;
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 

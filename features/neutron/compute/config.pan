@@ -6,6 +6,9 @@ include 'features/neutron/compute/rpms/config';
 # network driver configuration
 include 'features/neutron/compute/'+OS_NEUTRON_NETWORK_DRIVER;
 
+# Include some common configuration
+include 'features/neutron/common/config';
+
 # Configuration file for neutron
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
@@ -17,12 +20,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [keystone_authtoken] section
-'contents/keystone_authtoken/auth_uri' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':5000';
-'contents/keystone_authtoken/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
-'contents/keystone_authtoken/auth_plugin' = 'password';
-'contents/keystone_authtoken/project_domain_id' = 'default';
-'contents/keystone_authtoken/user_domain_id' = 'default';
-'contents/keystone_authtoken/project_name' = 'service';
+'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/keystone_authtoken/username' = OS_NEUTRON_USERNAME;
 'contents/keystone_authtoken/password' = OS_NEUTRON_PASSWORD;
 
@@ -32,16 +30,3 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
 'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
 'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
-
-# Create symlink from /etc/neutron/plugins/ml2/ml2_conf.ini to /etc/neutron/plugin.ini
-include 'components/symlink/config';
-prefix '/software/components/symlink';
-'links' = {
-  SELF[length(SELF)] = dict(
-    'exists', false,
-    'name', '/etc/neutron/plugin.ini',
-    'replace', dict( 'all', 'yes'),
-    'target', '/etc/neutron/plugins/ml2/ml2_conf.ini'
-  );
-  SELF;
-};
