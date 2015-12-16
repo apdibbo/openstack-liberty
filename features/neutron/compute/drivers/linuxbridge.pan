@@ -1,4 +1,4 @@
-template features/neutron/compute/linuxbridge;
+template features/neutron/compute/drivers/linuxbridge;
 
 include 'features/neutron/compute/rpms/linuxbridge';
 

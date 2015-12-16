@@ -88,6 +88,8 @@ variable OS_NEUTRON_DB_USERNAME ?= 'neutron';
 variable OS_NEUTRON_DB_PASSWORD ?= 'NEUTRON_DBPASS';
 variable OS_NEUTRON_USERNAME ?= 'neutron';
 variable OS_NEUTRON_PASSWORD ?= 'NEUTRON_PASS';
+variable OS_NEUTRON_NETWORK_DRIVER ?= 'linuxbridge';
+variable OS_NEUTRON_NETWORK_TYPE ?= 'provider-network';
 variable OS_NEUTRON_DEFAULT ?= true;
 variable OS_NEUTRON_DEFAULT_NETWORKS ?= "192.168.0.0/24";
 variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
@@ -96,7 +98,6 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
-variable OS_NEUTRON_NETWORK_DRIVER ?= 'linuxbridge';
 
 ##############################
 # RabbitMQ specific variable #

@@ -1,15 +1,6 @@
-template features/neutron/network/linuxbridge;
+template features/neutron/controller/drivers/linuxbridge;
 
-include 'features/neutron/network/rpms/linuxbridge';
-
-include 'components/chkconfig/config';
-prefix '/software/components/chkconfig/service';
-'neutron-linuxbridge-agent/on' = '';
-'neutron-linuxbridge-agent/startstop' = true;
-'neutron-dhcp-agent/on' = '';
-'neutron-dhcp-agent/startstop' = true;
-'neutron-metadata-agent/on' = '';
-'neutron-metadata-agent/startstop' = true;
+include 'features/neutron/controller/rpms/linuxbridge';
 
 # /etc/neutron/plugins/ml2/ml2_conf.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/ml2_conf.ini}';
@@ -42,12 +33,3 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/linux
 # [securitygroup] section
 'contents/securitygroup/enable_security_group' = 'True';
 'contents/securitygroup/firewall_driver' = 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver';
-
-# /etc/neutron/dhcp_agent.ini
-prefix '/software/components/metaconfig/services/{/etc/neutron/dhcp_agent.ini}';
-'module' = 'tiny';
-# [DEFAULT] section
-'contents/DEFAULT/interface_driver' = 'neutron.agent.linux.interface.BridgeInterfaceDriver';
-'contents/DEFAULT/dhcp_driver' = 'neutron.agent.linux.dhcp.Dnsmasq';
-'contents/DEFAULT/enable_isolated_metadata' = 'True';
-'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
