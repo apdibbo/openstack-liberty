@@ -11,3 +11,9 @@ prefix '/software/components/metaconfig/services/{/etc/httpd/conf.d/01-servernam
 'daemons/httpd' = 'restart';
 
 'contents/ServerName' = OS_KEYSTONE_CONTROLLER_HOST;
+
+include 'components/filecopy/config';
+prefix '/software/components/filecopy/services/{/etc/httpd/conf.d/wsgi-keystone.conf}';
+'config' = file_contents('features/httpd/wsgi-keystone.conf');
+'restart' = 'systemctl restart httpd.service';
+'perms' = '0644';
