@@ -1,5 +1,14 @@
 unique template features/nova/controller/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 # Install RPMs for compute part of neutron
 include 'features/nova/controller/rpms/config';
 
@@ -21,16 +30,16 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-api'='restart';
-'daemons/openstack-nova-cert'='restart';
-'daemons/openstack-nova-consoleauth'='restart';
-'daemons/openstack-nova-scheduler'='restart';
-'daemons/openstack-nova-conductor'='restart';
-'daemons/openstack-nova-novncproxy'='restart';
+#'daemons/openstack-nova-api'='restart';
+#'daemons/openstack-nova-cert'='restart';
+#'daemons/openstack-nova-consoleauth'='restart';
+#'daemons/openstack-nova-scheduler'='restart';
+#'daemons/openstack-nova-conductor'='restart';
+#'daemons/openstack-nova-novncproxy'='restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
-'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
+'contents/DEFAULT/my_ip' = PRIMARY_IP;
 'contents/DEFAULT/network_api_class' = 'nova.network.neutronv2.api.API';
 'contents/DEFAULT/security_group_api' = 'neutron';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';

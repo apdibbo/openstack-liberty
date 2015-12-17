@@ -1,5 +1,14 @@
 unique template features/nova/compute/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 
 # Include RPMS for nova hypervisor configuration
 include 'features/nova/compute/rpms/config';
@@ -17,14 +26,14 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-compute'='restart';
-'daemons/libvirtd'='restart';
+#'daemons/openstack-nova-compute'='restart';
+#'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/rcp_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
-'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
+'contents/DEFAULT/my_ip' = PRIMARY_IP;
 'contents/DEFAULT/network_api_class' = 'nova.network.neutronv2.api.API';
 'contents/DEFAULT/security_group_api' = 'neutron';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';

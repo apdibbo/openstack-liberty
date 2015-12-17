@@ -1,5 +1,14 @@
 unique template features/neutron/network/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 # Install RPMs for compute part of neutron
 include 'features/neutron/network/rpms/config';
 

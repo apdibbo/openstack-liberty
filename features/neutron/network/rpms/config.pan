@@ -1,5 +1,8 @@
 unique template features/neutron/network/rpms/config;
 
+# Include some useful RPMs
+include 'defaults/openstack/rpms';
+
 prefix '/software/packages';
 '{openstack-neutron}' ?= dict();
 '{openstack-neutron-linuxbridge}' ?= dict();

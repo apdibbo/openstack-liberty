@@ -2,6 +2,8 @@ unique template features/mariadb/config;
 
 include 'features/mariadb/rpms/config';
 
+include 'defaults/openstack/config';
+
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';
 'mariadb/on' = '';

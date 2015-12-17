@@ -4,6 +4,7 @@ unique template defaults/openstack/config;
 # Define site specific variables #
 ##################################
 include if_exists('site/openstack/config');
+variable PRIMARY_IP ?= DB_IP[escape(FULL_HOSTNAME)];
 
 ##############
 # RegionName #
