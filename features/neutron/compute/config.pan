@@ -12,8 +12,11 @@ include 'features/accounts/config';
 # Install RPMs for compute part of neutron
 include 'features/neutron/compute/rpms/config';
 
+# Include variables needed to configure neutron
+include 'features/neutron/variables/' + OS_NEUTRON_NETWORK_TYPE;
+
 # network driver configuration
-include 'features/neutron/compute/'+OS_NEUTRON_NETWORK_DRIVER;
+include 'features/neutron/compute/mechanism/' + OS_NEUTRON_MECHANISM;
 
 # Include some common configuration
 include 'features/neutron/common/config';
@@ -36,6 +39,5 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 # [oslo_concurency] section
 'contents/oslo_concurency/lock_path' = '/var/lib/neutron/tmp';
 #[oslo_messaging_rabbit] section
-'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
-'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
-'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
+

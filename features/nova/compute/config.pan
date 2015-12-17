@@ -63,10 +63,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 
 # [oslo_concurrency]
 'contents/oslo_concurrency/lock_path' = '/var/lib/nova/tmp';
-# [oslo_messaging_rabbit]
-'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
-'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
-'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
 
 # [vnc] section
 'contents/vnc/enabled' = 'True';
