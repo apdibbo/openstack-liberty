@@ -1,4 +1,4 @@
-unique template features/nova/controller/config;
+                                                                                                                                                                                                                                                                        unique template features/nova/controller/config;
 
 # Load some useful functions
 include 'defaults/openstack/functions';
@@ -46,6 +46,21 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/DEFAULT/firewall_driver' = 'nova.virt.firewall.NoopFirewallDriver';
 'contents/DEFAULT/enabled_apis' = 'osapi_compute,metadata';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
+'contents/DEFAULT/ssl_cert_file' = if ( OS_SSL ) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/ssl_key_file' = if ( OS_SSL ) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/enabled_ssl_apis' = if ( OS_SSL ) {
+  'osapi_compute';
+} else {
+  null;
+};
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -54,7 +69,9 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
   OS_NOVA_DB_HOST + '/nova';
 
 # [glance] section
-'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/protocol' = OS_GLANCE_CONTROLLER_PROTOCOL;
+'contents/glance/api_servers' = OS_GLANCE_CONTROLLER_PROTOCOL+'://'+OS_GLANCE_CONTROLLER_HOST+':9292';
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -62,8 +79,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [neutron] section
-'contents/neutron/url' = 'http://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
-'contents/neutron/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
+'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
+'contents/neutron/auth_url' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
 'contents/neutron/auth_plugin' = 'password';
 'contents/neutron/project_domain_id' = 'default';
 'contents/neutron/user_domain_id' = 'default';

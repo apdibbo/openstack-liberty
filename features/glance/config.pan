@@ -26,6 +26,17 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
+'contents/DEFAULT/cert_file' = if (OS_SSL) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/key_file' = if (OS_SSL) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/registry_client_protocol' = OS_CONTROLLER_PROTOCOL;
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -35,7 +46,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 
 # [glance_store] section
 'contents/glance_store/default_store' = 'file';
-'contents/glance_store/filesystem_store_datadir' = '/var/lib/glance/images/';
+'contents/glance_store/filesystem_store_datadir' = OS_GLANCE_STORE_DIR;
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -51,6 +62,16 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'noop';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
+'contents/DEFAULT/cert_file' = if (OS_SSL) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/key_file' = if (OS_SSL) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
 
 # [database] section
 'contents/database/connection' = 'mysql://' +

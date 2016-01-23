@@ -13,8 +13,8 @@ include 'features/accounts/config';
 include 'features/neutron/network/rpms/config';
 
 # Configure some usefull package for neutron
-include 'features/httpd/config';
-include 'features/memcache/config';
+#include 'features/httpd/config';
+#include 'features/memcache/config';
 
 # Include variables needed to configure neutron
 include 'features/neutron/variables/' + OS_NEUTRON_NETWORK_TYPE;

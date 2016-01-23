@@ -13,8 +13,8 @@ include 'features/accounts/config';
 include 'features/neutron/controller/rpms/config';
 
 # Configure some usefull package for neutron
-include 'features/httpd/config';
-include 'features/memcache/config';
+#include 'features/httpd/config';
+#include 'features/memcache/config';
 
 # Include variables needed to configure neutron
 include 'features/neutron/variables/' + OS_NEUTRON_NETWORK_TYPE;
@@ -41,8 +41,23 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/notify_nova_on_port_status_changes' = 'True';
 'contents/DEFAULT/notify_nova_on_port_data_changes' = 'True';
-'contents/DEFAULT/nova_url' = 'http://' + OS_NOVA_CONTROLLER_HOST + ':8774/v2';
+'contents/DEFAULT/nova_url' = OS_NOVA_CONTROLLER_PROTOCOL + '://' + OS_NOVA_CONTROLLER_HOST + ':8774/v2';
 'contents/DEFAULT/auth_strategy' = 'keystone';
+'contents/DEFAULT/ssl_cert_file' = if ( OS_SSL ) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/ssl_key_file' = if ( OS_SSL ) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/use_ssl' = if ( OS_SSL ) {
+  'True';
+} else {
+  null;
+};
 
 # [keystone_authtoken]
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -56,7 +71,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
    OS_NEUTRON_DB_HOST + '/neutron';
 
 # [nova]
-'contents/nova/auth_url' = 'http://' + OS_NOVA_CONTROLLER_HOST + ':35357';
+'contents/nova/auth_url' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
 'contents/nova/auth_plugin' = 'password';
 'contents/nova/project_domain_id' = 'default';
 'contents/nova/user_domain_id' = 'default';

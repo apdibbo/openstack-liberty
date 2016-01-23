@@ -40,7 +40,9 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/DEFAULT/firewall_driver' = 'nova.virt.firewall.NoopFirewallDriver';
 
 # [glance] section
-'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/protocol' = OS_GLANCE_CONTROLLER_PROTOCOL;
+'contents/glance/api_servers' = OS_GLANCE_CONTROLLER_PROTOCOL+'://'+OS_GLANCE_CONTROLLER_HOST+':9292';
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -51,8 +53,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/libvirt/virt_type' = 'qemu';
 
 # [neutron] section
-'contents/neutron/url' = 'http://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
-'contents/neutron/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
+'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
+'contents/neutron/auth_url' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
 'contents/neutron/auth_plugin' = 'password';
 'contents/neutron/project_domain_id' = 'default';
 'contents/neutron/user_domain_id' = 'default';
@@ -70,4 +72,4 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/vnc/enabled' = 'True';
 'contents/vnc/vncserver_listen' = '0.0.0.0';
 'contents/vnc/vncserver_proxyclient_address' = '$my_ip';
-'contents/vnc/novncproxy_base_url' = 'http://' + OS_NOVA_CONTROLLER_HOST + ':6080/vnc_auto.html';
+'contents/vnc/novncproxy_base_url' = OS_NOVA_CONTROLLER_PROTOCOL + '://' + OS_NOVA_CONTROLLER_HOST + ':6080/vnc_auto.html';

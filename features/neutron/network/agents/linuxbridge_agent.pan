@@ -17,8 +17,8 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/linux
 # [vxlan] section
 'contents/vxlan/enable_vxlan' = OS_NEUTRON_VXLAN_ENABLED;
 'contents/vxlan' = { if (OS_NEUTRON_VXLAN_ENABLED == 'True') {
-    SELF['local_ip'] = DB_IP[escape(FULL_HOSTNAME)];
-    SELF['l2_population'] = true;
+    SELF['local_ip'] = PRIMARY_IP;
+    SELF['l2_population'] = 'True';
     SELF;
   } else {
     SELF;

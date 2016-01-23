@@ -6,6 +6,14 @@ unique template defaults/openstack/config;
 include if_exists('site/openstack/config');
 variable PRIMARY_IP ?= DB_IP[escape(FULL_HOSTNAME)];
 
+############################
+# Active SSL configuration #
+############################
+variable OS_SSL ?= false;
+variable OS_SSL_CERT ?= '/etc/certs/' + FULL_HOSTNAME + '.crt';
+variable OS_SSL_KEY ?= '/etc/certs/' + FULL_HOSTNAME + '.key';
+variable OS_SSL_CHAIN ?= null;
+
 ##############
 # RegionName #
 ##############
@@ -34,6 +42,11 @@ variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
 # Define OS_CONTROLLER_HOST  #
 ##############################
 variable OS_CONTROLLER_HOST ?= error('OS_CONTROLLER_HOST must be declared');
+variable OS_CONTROLLER_PROTOCOL ?= if (OS_SSL) {
+  'https';
+} else {
+  'http';
+};
 
 #############################
 # Mariadb specific variable #
@@ -51,16 +64,19 @@ variable OS_METADATA_HOST ?= OS_CONTROLLER_HOST;
 # Glance specific variable #
 ############################
 variable OS_GLANCE_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_GLANCE_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_GLANCE_DB_HOST ?= OS_DB_HOST;
 variable OS_GLANCE_DB_USERNAME ?= 'glance';
 variable OS_GLANCE_DB_PASSWORD ?= 'GLANCE_DBPASS';
 variable OS_GLANCE_USERNAME ?= 'glance';
 variable OS_GLANCE_PASSWORD ?= 'GLANCE_PASS';
+variable OS_GLANCE_STORE_DIR ?= '/var/lib/glance/images/';
 
 ##############################
 # Keystone specific variable #
 ##############################
 variable OS_KEYSTONE_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_KEYSTONE_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_KEYSTONE_DB_HOST ?= OS_DB_HOST;
 variable OS_KEYSTONE_DB_USERNAME ?= 'keystone';
 variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
@@ -74,6 +90,7 @@ variable OS_MEMCACHE_HOST ?= 'localhost';
 # Nova specific variable #
 ##########################
 variable OS_NOVA_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_NOVA_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_NOVA_DB_HOST ?= OS_DB_HOST;
 variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
@@ -85,6 +102,7 @@ variable OS_NOVA_PASSWORD ?= 'NOVA_PASS';
 #############################
 variable OS_NEUTRON_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
 variable OS_NEUTRON_NETWORK_PROVIDER ?= OS_NEUTRON_CONTROLLER_HOST;
+variable OS_NEUTRON_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_NEUTRON_DB_HOST ?= OS_DB_HOST;
 variable OS_NEUTRON_DB_USERNAME ?= 'neutron';
 variable OS_NEUTRON_DB_PASSWORD ?= 'NEUTRON_DBPASS';
@@ -106,3 +124,10 @@ variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
 variable OS_RABBITMQ_HOST ?= OS_CONTROLLER_HOST;
 variable OS_RABBITMQ_USERNAME ?= 'openstack';
 variable OS_RABBITMQ_PASSWORD ?= 'RABBIT_PASS';
+
+###########
+# Horizon #
+###########
+variable OS_HORIZON_HOST ?= OS_CONTROLLER_HOST;
+variable OS_HORIZON_ALLOWED_HOSTS = list('*');
+variable OS_HORIZON_DEFAULT_ROLE = 'users';
