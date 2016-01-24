@@ -72,4 +72,5 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/vnc/enabled' = 'True';
 'contents/vnc/vncserver_listen' = '0.0.0.0';
 'contents/vnc/vncserver_proxyclient_address' = '$my_ip';
-'contents/vnc/novncproxy_base_url' = OS_NOVA_CONTROLLER_PROTOCOL + '://' + OS_NOVA_CONTROLLER_HOST + ':6080/vnc_auto.html';
+'contents/vnc/novncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6080/vnc_auto.html';
+'contents/vnc/xvpvncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6081/console';

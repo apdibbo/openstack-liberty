@@ -85,7 +85,9 @@ variable OS_MEMCACHE_HOST ?= 'localhost';
 # Nova specific variable #
 ##########################
 variable OS_NOVA_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_NOVA_VNC_HOST ?= OS_NOVA_CONTROLLER_HOST;
 variable OS_NOVA_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_NOVA_VNC_PROTOCOL ?= OS_NOVA_CONTROLLER_PROTOCOL;
 variable OS_NOVA_DB_HOST ?= OS_DB_HOST;
 variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
