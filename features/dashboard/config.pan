@@ -24,4 +24,5 @@ prefix '/software/components/metaconfig/services/{/etc/openstack-dashboard/local
 'contents/keystone/protocol' = OS_KEYSTONE_CONTROLLER_PROTOCOL;
 'contents/keystone/host' = OS_KEYSTONE_CONTROLLER_HOST;
 'contents/keystone/port' = 5000;
+'contents/secret_key' = OS_HORIZON_SECRET_KEY;
 

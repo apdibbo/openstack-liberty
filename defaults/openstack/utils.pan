@@ -1,16 +1,21 @@
 unique template defaults/openstack/utils;
 
-# Create Admin environment script
-
 include 'components/filecopy/config';
-prefix '/software/components/filecopy/services';
-'{/root/admin-openrc.sh}' = dict(
-  'config', format(file_contents('defaults/openstack/admin-openrc.sh'),
-    OS_USERNAME,
-    OS_PASSWORD,
-    OS_KEYSTONE_CONTROLLER_HOST,
-  ),
-);
+prefix '/software/components/filecopy/services/{/usr/share/templates/quattor/metaconfig/env.tt}';
+'config' = file_contents('defaults/openstack/metaconfig/env.tt');
+
+# Create Admin environment script
+include 'components/metaconfig/config';
+prefix '/software/components/metaconfig/services/{/root/admin-openrc.sh}';
+'module' = 'env';
+'contents/variables/OS_PROJECT_DOMAIN_ID' = 'default';
+'contents/variables/OS_USER_DOMAIN_ID' = 'default';
+'contents/variables/OS_PROJECT_NAME' = 'admin';
+'contents/variables/OS_TENANT_NAME' = 'admin';
+'contents/variables/OS_USERNAME' = OS_USERNAME;
+'contents/variables/OS_PASSWORD' = OS_PASSWORD;
+'contents/variables/OS_AUTH_URL' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357/v3';
+'contents/variables/OS_IDENTITY_API_VERSION' = 3;
 
 # Create a initialization script
 

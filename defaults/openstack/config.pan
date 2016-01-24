@@ -55,11 +55,6 @@ variable OS_DB_HOST ?= 'localhost';
 variable OS_DB_ADMIN_USERNAME ?= 'root';
 variable OS_DB_ADMIN_PASSWORD ?= 'root';
 
-##############################
-# Metadata specific variable #
-##############################
-variable OS_METADATA_HOST ?= OS_CONTROLLER_HOST;
-
 ############################
 # Glance specific variable #
 ############################
@@ -109,6 +104,7 @@ variable OS_NEUTRON_DB_PASSWORD ?= 'NEUTRON_DBPASS';
 variable OS_NEUTRON_USERNAME ?= 'neutron';
 variable OS_NEUTRON_PASSWORD ?= 'NEUTRON_PASS';
 variable OS_NEUTRON_NETWORK_TYPE ?= 'provider-service';
+variable OS_NEUTRON_OVERLAY_IP ?= PRIMARY_IP;
 variable OS_NEUTRON_DEFAULT ?= true;
 variable OS_NEUTRON_DEFAULT_NETWORKS ?= "192.168.0.0/24";
 variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
@@ -129,5 +125,11 @@ variable OS_RABBITMQ_PASSWORD ?= 'RABBIT_PASS';
 # Horizon #
 ###########
 variable OS_HORIZON_HOST ?= OS_CONTROLLER_HOST;
-variable OS_HORIZON_ALLOWED_HOSTS = list('*');
-variable OS_HORIZON_DEFAULT_ROLE = 'users';
+variable OS_HORIZON_ALLOWED_HOSTS ?= list('*');
+variable OS_HORIZON_DEFAULT_ROLE ?= 'users';
+variable OS_HORIZON_SECRET_KEY ?= error('OS_HORIZON_SECRET_KEY must be defined');
+
+##############################
+# Metadata specific variable #
+##############################
+variable OS_METADATA_HOST ?= OS_NOVA_CONTROLLER_HOST;

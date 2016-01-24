@@ -17,7 +17,7 @@ OPENSTACK_KEYSTONE_DEFAULT_ROLE = "[% role %]"
 WEBROOT = '/dashboard/'
 LOCAL_PATH = '/tmp'
 
-SECRET_KEY='2d2a0943d1834a1ecf1f'
+SECRET_KEY='[% secret_key %]'
 
 CACHES = {
     'default': {
