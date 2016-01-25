@@ -130,6 +130,17 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
 
+############################
+# Cinder specific variable #
+############################
+variable OS_CINDER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_CINDER_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_CINDER_DB_HOST ?= OS_DB_HOST;
+variable OS_CINDER_DB_USERNAME ?= 'cinder';
+variable OS_CINDER_DB_PASSWORD ?= 'CINDER_DBPASS';
+variable OS_CINDER_USERNAME ?= 'cinder';
+variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
+
 ##############################
 # RabbitMQ specific variable #
 ##############################
