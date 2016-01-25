@@ -20,11 +20,11 @@ prefix '/software/components/chkconfig/service';
 'openstack-ceilometer-central/on' = '';
 'openstack-ceilometer-central/startstop' = true;
 'openstack-ceilometer-collector.service/on' = '';
-'openstack-ceilometer-collector.service' = true;
+'openstack-ceilometer-collector.service/startstop' = true;
 'openstack-ceilometer-alarm-notifier.service/on' = '';
-'openstack-ceilometer-alarm-notifier.service' = true;
+'openstack-ceilometer-alarm-notifier.service/startstop' = true;
 'openstack-ceilometer-alarm-evaluator.service/on' = '';
-'openstack-ceilometer-alarm-evaluator.service' = true;
+'openstack-ceilometer-alarm-evaluator.service/startstop' = true;
 
 
 
@@ -65,7 +65,7 @@ prefix '/software/components/metaconfig/services/{/etc/ceilometer/ceilometer.con
 'contents/keystone_authtoken/username' = OS_CEILOMETER_USERNAME;
 'contents/keystone_authtoken/password' = OS_CEILOMETER_PASSWORD;
 
-'contents/service_credentials/os_auth_url' = OS_CEILOMETER_CONTROLLER_PROTOCOL + '://' + OS_CEILOMETER_CONTROLLER_HOST = ':5000/v2.0';
+'contents/service_credentials/os_auth_url' = OS_CEILOMETER_CONTROLLER_PROTOCOL + '://' + OS_CEILOMETER_CONTROLLER_HOST + ':5000/v2.0';
 'contents/service_credentials/username' = OS_CEILOMETER_USERNAME;
 'contents/service_credentials/os_tenant_name' = 'service';
 'contents/service_credentials/os_password' = OS_CEILOMETER_PASSWORD;
