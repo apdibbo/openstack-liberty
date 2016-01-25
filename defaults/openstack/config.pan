@@ -67,6 +67,20 @@ variable OS_GLANCE_USERNAME ?= 'glance';
 variable OS_GLANCE_PASSWORD ?= 'GLANCE_PASS';
 variable OS_GLANCE_STORE_DIR ?= '/var/lib/glance/images/';
 
+############################
+# Heat specific variable #
+############################
+variable OS_HEAT_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_HEAT_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_HEAT_DB_HOST ?= OS_DB_HOST;
+variable OS_HEAT_DB_USERNAME ?= 'heat';
+variable OS_HEAT_DB_PASSWORD ?= 'HEAT_DBPASS';
+variable OS_HEAT_USERNAME ?= 'heat';
+variable OS_HEAT_PASSWORD ?= 'HEAT_PASS';
+variable OS_HEAT_STACK_DOMAIN ?= 'heat';
+variable OS_HEAT_DOMAIN_ADMIN_USERNAME ?= 'heat_domain_admin';
+variable OS_HEAT_DOMAIN_ADMIN_PASSWORD ?= 'HEAT_DOMAIN_ADMIN_PASS';
+
 ##############################
 # Keystone specific variable #
 ##############################

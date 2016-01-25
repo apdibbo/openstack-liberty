@@ -12,5 +12,6 @@ include 'personality/nova/config';
 include 'personality/neutron/config';
 include 'features/neutron/network/config';
 include 'personality/dashboard/config';
+include 'personality/heat/config';
 
 include 'defaults/openstack/utils';
