@@ -17,6 +17,7 @@ export HEAT_ORCHESTRATION_URL="http://%s:8004/v1/%%\(tenant_id\)s"
 export HEAT_CLOUDFORMATION_URL="http://%s:8000/v1"
 export CINDER_URL="http://%s:8776/v1/%%\(tenant_id\)s"
 export CINDERV2_URL="http://%s:8776/v2/%%\(tenant_id\)s"
+export CEILOMETER_URL="http://%s:8777"
 #
 
 export ADMIN_USERNAME=%s
@@ -34,6 +35,11 @@ export HEAT_DOMAIN_ADMIN_USER=%s
 export HEAT_DOMAIN_ADMIN_PASSWORD=%s
 export CINDER_USER=%s
 export CINDER_PASSWORD=%s
+export CEILOMETER_DB_HOST=%s
+export CEILOMETER_DB_USER=%s
+export CEILOMETER_DB_PASSWORD=%s
+export CEILOMETER_USER=%s
+export CEILOMETER_PASSWORD=%s
 export OS_TOKEN=%s
 export NEUTRON_DEFAULT_NETWORK=%s
 export NEUTRON_DEFAULT_DHCP_START=%s
@@ -89,6 +95,12 @@ echo "  Orchestration service"
 $DEBUG_DATABASES su -s /bin/sh -c "heat-manage db_sync" heat
 echo "  Block service"
 $DEBUG_DATABASES su -s /bin/sh -c "cinder-manage db sync" cinder
+echo "  Telemetry Service"
+$DEBUG_DATABASES mongo --host $CEILOMETER_DB_HOST --eval "
+  db = db.getSiblingDB('ceilometer');
+  db.createUser({user: $CEILOMETER_DB_USER,
+  pwd: $CEILOMETER_DB_PASSWORD,
+  roles: [ 'readWrite', 'dbAdmin' ]})"
 echo "[DONE] Database configuration"
 
 echo "[START] service configuration"
@@ -109,6 +121,8 @@ echo "  cinder volume"
 $DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volume
 echo "  cinder volumev2"
 $DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volumev2
+echo "  ceilometer"
+$DEBUG_SERVICES openstack service create --name ceilometer --description "Telemetry" metering
 echo "[END] service configuration"
 
 echo "[START] endpoints configuration"
@@ -153,6 +167,12 @@ do
   $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volume $endpoint_type $CINDER_URL
   $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volumev2 $endpoint_type $CINDERV2_URL
 done
+echo "  Ceilometer endpoint"
+for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
+do
+  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION metering $endpoint_type $CEILOMETER_URL
+  2_URL
+done
 echo "[END] endpoints configuration"
 
 echo "[START] Project configuration"
@@ -180,15 +200,14 @@ echo "  nova user [$NOVA_USER]"
 $DEBUG_USERS openstack user create --domain default --password $NOVA_PASSWORD $NOVA_USER
 echo "  neutron user [$NEUTRON_USER]"
 $DEBUG_USERS openstack user create --domain default --password $NEUTRON_PASSWORD $NEUTRON_USER
-<<<<<<< HEAD
 echo "  heat user [$HEAT_USER]"
 $DEBUG_USERS openstack user create --domain default --password $HEAT_PASSWORD $HEAT_USER
 echo "  heat domain admin user [$HEAT_USER]"
 $DEBUG_USERS openstack user create --domain $HEAT_STACK_DOMAIN --password $HEAT_DOMAIN_ADMIN_PASSWORD $HEAT_DOMAIN_ADMIN_USER
-=======
 echo "  cinder user [$CINDER_USER]"
 $DEBUG_USERS openstack user create --domain default --password $CINDER_PASSWORD $CINDER_USER
->>>>>>> 2638171... add cinder feature
+echo "  ceilometer user [$CEILOMETER_USER]"
+$DEBUG_USERS openstack user create --domain default --password $CEILOMETER_PASSWORD $CEILOMETER_USER
 echo "[END] User configuration"
 
 echo "[START] Role configuration"
@@ -200,11 +219,10 @@ echo "  Role for nova"
 $DEBUG_USERS_TO_ROLES openstack role add --project service --user $NOVA_USER admin
 echo "  Role for Neutron"
 $DEBUG_USERS_TO_ROLES openstack role add --project service --user $NEUTRON_USER admin
-<<<<<<< HEAD
 echo "  Role for Heat"
 $DEBUG_USERS_TO_ROLES openstack role add --project service --user $HEAT_USER admin
-=======
 echo "  Role for cinder"
 $DEBUG_USERS_TO_ROLES openstack role add --project service --user $CINDER_USER admin
->>>>>>> 2638171... add cinder feature
+echo "  Role for ceilometer"
+$DEBUG_USERS_TO_ROLES openstack role add --project service --user $CEILOMETER_USER admin
 echo "[END] Role configuration"

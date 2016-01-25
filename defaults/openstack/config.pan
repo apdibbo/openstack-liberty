@@ -141,6 +141,17 @@ variable OS_CINDER_DB_PASSWORD ?= 'CINDER_DBPASS';
 variable OS_CINDER_USERNAME ?= 'cinder';
 variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
 
+############################
+# Ceilometer specific variable #
+############################
+variable OS_CEILOMETER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_CEILOMETER_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_CEILOMETER_DB_HOST ?= OS_DB_HOST;
+variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
+variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
+variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
+variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
+
 ##############################
 # RabbitMQ specific variable #
 ##############################
