@@ -61,6 +61,22 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 } else {
   null;
 };
+# Enable SSL for novnc
+'contents/DEFAULT/cert' = if ( OS_SSL ) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/key' = if ( OS_SSL ) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/ssl_only' = if ( OS_SSL ) {
+  'True';
+} else {
+  null;
+};
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
