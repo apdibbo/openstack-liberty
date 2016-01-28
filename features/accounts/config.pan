@@ -23,6 +23,10 @@ prefix '/software/components/accounts';
 'kept_users/neutron' = '';
 'kept_groups/neutron' = '';
 
+# Cinder user
+'kept_users/cinder' = '';
+'kept_groups/cinder' = '';
+
 # Rabbitmq user
 'kept_users/rabbitmq' = '';
 'kept_groups/rabbitmq' = '';

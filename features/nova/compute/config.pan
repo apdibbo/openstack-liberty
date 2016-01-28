@@ -74,3 +74,12 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/vnc/vncserver_proxyclient_address' = '$my_ip';
 'contents/vnc/novncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6080/vnc_auto.html';
 'contents/vnc/xvpvncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6081/console';
+
+# [cinder] section
+'contents/cinder' = {
+  if (OS_CINDER_ENABLED) {
+    dict('os_region_name', OS_REGION_NAME);
+  } else {
+    null;
+  };
+};

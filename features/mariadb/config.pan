@@ -36,3 +36,10 @@ include 'features/mariadb/keystone';
 include 'features/mariadb/glance';
 include 'features/mariadb/neutron';
 include 'features/mariadb/nova';
+include {
+  if (OS_CINDER_ENABLED) {
+    'features/mariadb/cinder';
+  } else {
+    null;
+  };
+};

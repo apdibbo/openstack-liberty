@@ -107,6 +107,8 @@ variable OS_NEUTRON_USERNAME ?= 'neutron';
 variable OS_NEUTRON_PASSWORD ?= 'NEUTRON_PASS';
 variable OS_NEUTRON_NETWORK_TYPE ?= 'provider-service';
 variable OS_NEUTRON_OVERLAY_IP ?= PRIMARY_IP;
+variable OS_NEUTRON_BASE_MAC ?= null;
+variable OS_NEUTRON_DVR_BASE_MAC ?= null;
 variable OS_NEUTRON_DEFAULT ?= true;
 variable OS_NEUTRON_DEFAULT_NETWORKS ?= "192.168.0.0/24";
 variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
@@ -115,6 +117,22 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
+
+############################
+# Cinder specific variable #
+############################
+# Cinder Controller
+variable OS_CINDER_ENABLED ?= false;
+variable OS_CINDER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_CINDER_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_CINDER_DB_HOST ?= OS_DB_HOST;
+variable OS_CINDER_DB_USERNAME ?= 'cinder';
+variable OS_CINDER_DB_PASSWORD ?= 'CINDER_DBPASS';
+variable OS_CINDER_USERNAME ?= 'cinder';
+variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
+# Cinder Storage
+variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
+variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
 
 ##############################
 # RabbitMQ specific variable #
