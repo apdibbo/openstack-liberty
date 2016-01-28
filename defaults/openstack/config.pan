@@ -142,6 +142,7 @@ variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
 ############################
 # Cinder specific variable #
 ############################
+
 # Cinder Controller
 variable OS_CINDER_ENABLED ?= false;
 variable OS_CINDER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
@@ -166,6 +167,11 @@ variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
+
+# Cinder Storage
+variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
+variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
+
 
 ##############################
 # RabbitMQ specific variable #

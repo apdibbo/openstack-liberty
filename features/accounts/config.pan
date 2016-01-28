@@ -35,6 +35,7 @@ prefix '/software/components/accounts';
 'kept_users/heat' = '';
 'kept_groups/heat' = '';
 
+
 # Rabbitmq user
 'kept_users/rabbitmq' = '';
 'kept_groups/rabbitmq' = '';
