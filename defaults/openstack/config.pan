@@ -192,3 +192,8 @@ variable OS_HORIZON_SECRET_KEY ?= error('OS_HORIZON_SECRET_KEY must be defined')
 # Metadata specific variable #
 ##############################
 variable OS_METADATA_HOST ?= OS_NOVA_CONTROLLER_HOST;
+
+###########################
+# CEPH Specific Variables #
+###########################
+variable OS_CEPH ?= false;
