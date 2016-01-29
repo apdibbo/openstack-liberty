@@ -24,7 +24,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 'module' = 'tiny';
 #'daemons/openstack-glance-api' = 'restart';
 # [DEFAULT] section
-'contents/DEFAULT/notification_driver' = 'noop';
+'contents/DEFAULT/notification_driver' = 'messagingv2';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/cert_file' = if (OS_SSL) {
   OS_SSL_CERT;
@@ -37,6 +37,9 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
   null;
 };
 'contents/DEFAULT/registry_client_protocol' = OS_CONTROLLER_PROTOCOL;
+
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -60,7 +63,7 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 'module' = 'tiny';
 #'daemons/openstack-glance-registry' = 'restart';
 # [DEFAULT] section
-'contents/DEFAULT/notification_driver' = 'noop';
+'contents/DEFAULT/notification_driver' = 'messagingv2';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/cert_file' = if (OS_SSL) {
   OS_SSL_CERT;
@@ -72,6 +75,9 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 } else {
   null;
 };
+
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
