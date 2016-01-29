@@ -13,8 +13,20 @@ include 'personality/nova/config';
 include 'personality/neutron/config';
 include 'features/neutron/network/config';
 include 'personality/dashboard/config';
-include 'personality/heat/config';
-include 'personality/cinder/config';
-include 'personality/ceilometer/config';
+include if (OS_INCLUDE_HEAT) {
+    'personality/heat/config';
+} else {
+    null;
+} ;
+include if (OS_INCLUDE_CINDER) {
+    'personality/cinder/config';
+} else {
+    null;
+};
+include if (OS_INCLUDE_CEILOMETER) {
+    'personality/ceilometer/config';
+} else {
+    null;
+};
 
 include 'defaults/openstack/utils';

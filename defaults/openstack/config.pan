@@ -34,9 +34,16 @@ variable OS_METADATA_SECRET ?= error('OS_METADATA_SECRET must be declared');
 # NODE_TYPE is 'compute' or 'controller' #
 ##########################################
 variable OS_NODE_TYPE ?= 'compute';
-#
 variable OS_LOGGING_TYPE ?= 'file';
 variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
+
+####################################
+# Additional Components to include #
+####################################
+variable OS_INCLUDE_HEAT = false;
+variable OS_INCLUDE_CINDER = false;
+variable OS_INCLUDE_CEILOMETER = false;
+
 
 ###############################
 # Define OS_CONTROLLER_HOST  #
