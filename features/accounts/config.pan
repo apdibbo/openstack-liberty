@@ -27,6 +27,10 @@ prefix '/software/components/accounts';
 'kept_users/cinder' = '';
 'kept_groups/cinder' = '';
 
+# Heat user
+'kept_users/heat' = '';
+'kept_groups/heat' = '';
+
 # Rabbitmq user
 'kept_users/rabbitmq' = '';
 'kept_groups/rabbitmq' = '';
