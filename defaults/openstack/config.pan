@@ -34,9 +34,16 @@ variable OS_METADATA_SECRET ?= error('OS_METADATA_SECRET must be declared');
 # NODE_TYPE is 'compute' or 'controller' #
 ##########################################
 variable OS_NODE_TYPE ?= 'compute';
-#
 variable OS_LOGGING_TYPE ?= 'file';
 variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
+
+####################################
+# Additional Components to include #
+####################################
+variable OS_INCLUDE_HEAT = false;
+variable OS_INCLUDE_CINDER = false;
+variable OS_INCLUDE_CEILOMETER = false;
+
 
 ###############################
 # Define OS_CONTROLLER_HOST  #
@@ -66,6 +73,20 @@ variable OS_GLANCE_DB_PASSWORD ?= 'GLANCE_DBPASS';
 variable OS_GLANCE_USERNAME ?= 'glance';
 variable OS_GLANCE_PASSWORD ?= 'GLANCE_PASS';
 variable OS_GLANCE_STORE_DIR ?= '/var/lib/glance/images/';
+
+############################
+# Heat specific variable #
+############################
+variable OS_HEAT_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_HEAT_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_HEAT_DB_HOST ?= OS_DB_HOST;
+variable OS_HEAT_DB_USERNAME ?= 'heat';
+variable OS_HEAT_DB_PASSWORD ?= 'HEAT_DBPASS';
+variable OS_HEAT_USERNAME ?= 'heat';
+variable OS_HEAT_PASSWORD ?= 'HEAT_PASS';
+variable OS_HEAT_STACK_DOMAIN ?= 'heat';
+variable OS_HEAT_DOMAIN_ADMIN_USERNAME ?= 'heat_domain_admin';
+variable OS_HEAT_DOMAIN_ADMIN_PASSWORD ?= 'HEAT_DOMAIN_ADMIN_PASS';
 
 ##############################
 # Keystone specific variable #
@@ -133,6 +154,17 @@ variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
 # Cinder Storage
 variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
 variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
+
+############################
+# Ceilometer specific variable #
+############################
+variable OS_CEILOMETER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
+variable OS_CEILOMETER_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
+variable OS_CEILOMETER_DB_HOST ?= OS_DB_HOST;
+variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
+variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
+variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
+variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
 
 ##############################
 # RabbitMQ specific variable #
