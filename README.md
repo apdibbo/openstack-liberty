@@ -7,20 +7,23 @@
 ## Usage
 * Create a template site/openstack/config
 
-The following variables is mandatory
-* OS_CONTROLLER_HOST : name of controller
-* OS_METADATA_SECRET : used as a shared secret for metadata
-* OS_ADMIN_TOKEN : used as a super-user token for initialisation
+Look @ defaults/openstack/config.pan to have a list of all needed variables
 
 ## Some comment
 * Default username and password are the same than those you have on RDO documentation
-* By default, all stuff are put under 1 controller
+* We try to avoid filecopy config and prefer metaconfig usage. .tt file are provide with filecopy as far as it is not
+available officialy
+
+## Supported services
+* Keystone: Apache configuration of keystone. sql or ldap backend is supported for user.
+* Glance: Filesystem based glance is supported
+* Nova
+* Neutron: "self-service" or "provider" configuration is supported
+* Cinder: "lvm" based backend is supported
+* Ceilometer
+* Heat
 
 ## TODO
 * metaconfig is NOT typed yet
-* httpd is not configure for keystone
-  * ServerName is not put correctly
-  * wgsi-keystone.conf is not created
 * Database is not populate
   * a init.sh script is created but not sure it work well (with fileconfig)
-* Configuration must be splited into structure template to allow more flexibility
