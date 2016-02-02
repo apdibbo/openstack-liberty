@@ -2,6 +2,8 @@ unique template features/mariadb/config;
 
 include 'features/mariadb/rpms/config';
 
+include 'defaults/openstack/config';
+
 include 'components/chkconfig/config';
 prefix '/software/components/chkconfig/service';
 'mariadb/on' = '';
@@ -34,3 +36,10 @@ include 'features/mariadb/keystone';
 include 'features/mariadb/glance';
 include 'features/mariadb/neutron';
 include 'features/mariadb/nova';
+include {
+  if (OS_CINDER_ENABLED) {
+    'features/mariadb/cinder';
+  } else {
+    null;
+  };
+};

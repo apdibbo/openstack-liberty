@@ -1,5 +1,14 @@
 unique template features/nova/compute/config;
 
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
+
 
 # Include RPMS for nova hypervisor configuration
 include 'features/nova/compute/rpms/config';
@@ -17,21 +26,23 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-compute'='restart';
-'daemons/libvirtd'='restart';
+#'daemons/openstack-nova-compute'='restart';
+#'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/rcp_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
-'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
+'contents/DEFAULT/my_ip' = PRIMARY_IP;
 'contents/DEFAULT/network_api_class' = 'nova.network.neutronv2.api.API';
 'contents/DEFAULT/security_group_api' = 'neutron';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';
 'contents/DEFAULT/firewall_driver' = 'nova.virt.firewall.NoopFirewallDriver';
 
 # [glance] section
-'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/protocol' = OS_GLANCE_CONTROLLER_PROTOCOL;
+'contents/glance/api_servers' = OS_GLANCE_CONTROLLER_PROTOCOL+'://'+OS_GLANCE_CONTROLLER_HOST+':9292';
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -39,11 +50,11 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [libvirtd] section
-'contents/libvirt/virt_type' = 'qemu';
+'contents/libvirt/virt_type' = 'kvm';
 
 # [neutron] section
-'contents/neutron/url' = 'http://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
-'contents/neutron/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
+'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
+'contents/neutron/auth_url' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
 'contents/neutron/auth_plugin' = 'password';
 'contents/neutron/project_domain_id' = 'default';
 'contents/neutron/user_domain_id' = 'default';
@@ -54,13 +65,21 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 
 # [oslo_concurrency]
 'contents/oslo_concurrency/lock_path' = '/var/lib/nova/tmp';
-# [oslo_messaging_rabbit]
-'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
-'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
-'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
 
 # [vnc] section
 'contents/vnc/enabled' = 'True';
 'contents/vnc/vncserver_listen' = '0.0.0.0';
 'contents/vnc/vncserver_proxyclient_address' = '$my_ip';
-'contents/vnc/novncproxy_base_url' = 'http://' + OS_NOVA_CONTROLLER_HOST + ':6080/vnc_auto.html';
+'contents/vnc/novncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6080/vnc_auto.html';
+'contents/vnc/xvpvncproxy_base_url' = OS_NOVA_VNC_PROTOCOL + '://' + OS_NOVA_VNC_HOST + ':6081/console';
+
+# [cinder] section
+'contents/cinder' = {
+  if (OS_CINDER_ENABLED) {
+    dict('os_region_name', OS_REGION_NAME);
+  } else {
+    null;
+  };
+};

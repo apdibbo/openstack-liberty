@@ -18,3 +18,29 @@ function openstack_load_config = {
   };
   SELF;
 };
+
+# FIXME: As I use tiny metaconfig module, i can't just put list to have
+# element1, element2, ...
+function openstack_list_to_string = {
+  if (ARGC != 1 ) {
+    error('openstack_load_config need a argument');
+  };
+
+  if (is_list(ARGV[0])) {
+    config = ARGV[0];
+  } else  {
+    error('openstack_list_to_string need a list as argument');
+  };
+
+  result = '';
+
+  foreach(k;v;config) {
+    if (result != '') {
+      result = result + ',' + v;
+    } else {
+      result = v;
+    };
+
+    result;
+  };
+};

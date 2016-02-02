@@ -1,4 +1,13 @@
-unique template features/nova/controller/config;
+                                                                                                                                                                                                                                                                        unique template features/nova/controller/config;
+
+# Load some useful functions
+include 'defaults/openstack/functions';
+
+# Include general openstack variables
+include 'defaults/openstack/config';
+
+# Fix list of Openstack user that should not be deleted
+include 'features/accounts/config';
 
 # Install RPMs for compute part of neutron
 include 'features/nova/controller/rpms/config';
@@ -21,22 +30,53 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-api'='restart';
-'daemons/openstack-nova-cert'='restart';
-'daemons/openstack-nova-consoleauth'='restart';
-'daemons/openstack-nova-scheduler'='restart';
-'daemons/openstack-nova-conductor'='restart';
-'daemons/openstack-nova-novncproxy'='restart';
+#'daemons/openstack-nova-api'='restart';
+#'daemons/openstack-nova-cert'='restart';
+#'daemons/openstack-nova-consoleauth'='restart';
+#'daemons/openstack-nova-scheduler'='restart';
+#'daemons/openstack-nova-conductor'='restart';
+#'daemons/openstack-nova-novncproxy'='restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
-'contents/DEFAULT/my_ip' = DB_IP[escape(FULL_HOSTNAME)];
+'contents/DEFAULT/my_ip' = PRIMARY_IP;
 'contents/DEFAULT/network_api_class' = 'nova.network.neutronv2.api.API';
 'contents/DEFAULT/security_group_api' = 'neutron';
 'contents/DEFAULT/linuxnet_interface_driver' = 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver';
 'contents/DEFAULT/firewall_driver' = 'nova.virt.firewall.NoopFirewallDriver';
 'contents/DEFAULT/enabled_apis' = 'osapi_compute,metadata';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
+'contents/DEFAULT/ssl_cert_file' = if ( OS_SSL ) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/ssl_key_file' = if ( OS_SSL ) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/enabled_ssl_apis' = if ( OS_SSL ) {
+  'osapi_compute';
+} else {
+  null;
+};
+# Enable SSL for novnc
+'contents/DEFAULT/cert' = if ( OS_SSL ) {
+  OS_SSL_CERT;
+} else {
+  null;
+};
+'contents/DEFAULT/key' = if ( OS_SSL ) {
+  OS_SSL_KEY;
+} else {
+  null;
+};
+'contents/DEFAULT/ssl_only' = if ( OS_SSL ) {
+  'True';
+} else {
+  null;
+};
 
 # [database] section
 'contents/database/connection' = 'mysql://' +
@@ -45,7 +85,9 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
   OS_NOVA_DB_HOST + '/nova';
 
 # [glance] section
-'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/glance/protocol' = OS_GLANCE_CONTROLLER_PROTOCOL;
+'contents/glance/api_servers' = OS_GLANCE_CONTROLLER_PROTOCOL+'://'+OS_GLANCE_CONTROLLER_HOST+':9292';
 
 # [keystone_authtoken] section
 'contents/keystone_authtoken' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
@@ -53,8 +95,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [neutron] section
-'contents/neutron/url' = 'http://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
-'contents/neutron/auth_url' = 'http://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
+'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
+'contents/neutron/auth_url' = OS_KEYSTONE_CONTROLLER_PROTOCOL + '://' + OS_KEYSTONE_CONTROLLER_HOST + ':35357';
 'contents/neutron/auth_plugin' = 'password';
 'contents/neutron/project_domain_id' = 'default';
 'contents/neutron/user_domain_id' = 'default';
@@ -67,10 +109,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 
 # [oslo_concurrency]
 'contents/oslo_concurrency/lock_path' = '/var/lib/nova/tmp';
-# [oslo_rabbit]
-'contents/oslo_messaging_rabbit/rabbit_host' = OS_RABBITMQ_HOST;
-'contents/oslo_messaging_rabbit/rabbit_userid' = OS_RABBITMQ_USERNAME;
-'contents/oslo_messaging_rabbit/rabbit_password' = OS_RABBITMQ_PASSWORD;
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
 
 # [vnc] section
 'contents/vnc/vncserver_listen' = '$my_ip';
