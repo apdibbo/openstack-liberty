@@ -27,6 +27,10 @@ prefix '/software/components/accounts';
 'kept_users/cinder' = '';
 'kept_groups/cinder' = '';
 
+# Ceilometer user
+'kept_users/ceilometer' = '';
+'kept_groups/ceilometer' = '';
+
 # Heat user
 'kept_users/heat' = '';
 'kept_groups/heat' = '';
@@ -38,3 +42,7 @@ prefix '/software/components/accounts';
 # Memcached user
 'kept_users/memcached' = '';
 'kept_groups/memcached' = '';
+
+# Memcached user
+'kept_users/mongodb' = '';
+'kept_groups/mongodb' = '';
