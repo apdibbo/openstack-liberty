@@ -19,12 +19,12 @@ prefix '/software/components/chkconfig/service';
 'openstack-ceilometer-notification/startstop' = true;
 'openstack-ceilometer-central/on' = '';
 'openstack-ceilometer-central/startstop' = true;
-'openstack-ceilometer-collector.service/on' = '';
-'openstack-ceilometer-collector.service/startstop' = true;
-'openstack-ceilometer-alarm-notifier.service/on' = '';
-'openstack-ceilometer-alarm-notifier.service/startstop' = true;
-'openstack-ceilometer-alarm-evaluator.service/on' = '';
-'openstack-ceilometer-alarm-evaluator.service/startstop' = true;
+'openstack-ceilometer-collector/on' = '';
+'openstack-ceilometer-collector/startstop' = true;
+'openstack-ceilometer-alarm-notifier/on' = '';
+'openstack-ceilometer-alarm-notifier/startstop' = true;
+'openstack-ceilometer-alarm-evaluator/on' = '';
+'openstack-ceilometer-alarm-evaluator/startstop' = true;
 
 
 
@@ -33,12 +33,12 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/ceilometer/ceilometer.conf}';
 'module' = 'tiny';
-'daemons/openstack-ceilometer-api.service'='restart';
-'daemons/openstack-ceilometer-notification.service'='restart';
-'daemons/openstack-ceilometer-central.service'='restart';
-'daemons/openstack-ceilometer-collector.service'='restart';
-'daemons/openstack-ceilometer-alarm-evaluator.service'='restart';
-'daemons/openstack-ceilometer-alarm-notifier.service'='restart';
+'daemons/openstack-ceilometer-api'='restart';
+'daemons/openstack-ceilometer-notification'='restart';
+'daemons/openstack-ceilometer-central'='restart';
+'daemons/openstack-ceilometer-collector'='restart';
+'daemons/openstack-ceilometer-alarm-evaluator'='restart';
+'daemons/openstack-ceilometer-alarm-notifier'='restart';
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
 'contents/DEFAULT/my_ip' = PRIMARY_IP;
