@@ -102,6 +102,11 @@ variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
 #############################
 variable OS_MEMCACHE_HOST ?= 'localhost';
 
+#############################
+# MongoDB specfic variable #
+#############################
+variable OS_MONGODB_DBPATH ?= '/var/mongodb';
+
 ##########################
 # Nova specific variable #
 ##########################

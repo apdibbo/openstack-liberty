@@ -22,8 +22,8 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/cinder/cinder.conf}';
 'module' = 'tiny';
-#'daemons/openstack-cinder-api' = 'restart';
-#'daemons/openstack-cinder-scheduler' = 'restart';
+'daemons/openstack-cinder-api' = 'restart';
+'daemons/openstack-cinder-scheduler' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
@@ -55,3 +55,9 @@ prefix '/software/components/metaconfig/services/{/etc/cinder/cinder.conf}';
 'contents/oslo_concurrency/lock_path' = '/var/lib/cinder/tmp';
 #[oslo_messaging_rabbit] section
 'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
+
+include if (OS_CEPH) {
+    'features/cinder/controller/ceph';
+} else {
+    null;
+};
