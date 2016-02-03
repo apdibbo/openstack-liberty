@@ -51,18 +51,6 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 
 # [libvirtd] section
 'contents/libvirt/virt_type' = 'qemu';
-'contents/libvirt/images_type = if (OS_CEPH) {'rbd';} else { null;};
-'contents/libvirt/images_rbd_pool = if (OS_CEPH) {OS_CEPH_NOVA_POOL;} else { null;};
-'contents/libvirt/images_rbd_ceph_conf = if (OS_CEPH) {OS_CEPH_NOVA_CEPH_CONFIG;} else { null;};
-'contents/libvirt/rbd_user = if (OS_CEPH) {OS_CEPH_CINDER_USER;} else { null;};
-'contents/libvirt/rbd_secret_uuid = if (OS_CEPH) {OS_CEPH_LIBVIRT_SECRET;} else { null;};
-'contents/libvirt/disk_cachemodes'=if (OS_CEPH) {'"network=writeback"';} else { null;};
-'contents/libvirt/inject_password' = if (OS_CEPH) {'false';} else { null;};
-'contents/libvirt/inject_key' = if (OS_CEPH) {'false';} else { null;};
-'contents/libvirt/inject_partition' = if (OS_CEPH) {'-2';} else { null;};
-'contents/libvirt/live_migration_flag'=if (OS_CEPH) {'"VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST,VIR_MIGRATE_TUNNELLED"';} else { null;};
-'contents/libvirt/hw_disk_discard' = if (OS_CEPH) {'unmap'; } else { null;};
-
 
 # [neutron] section
 'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
