@@ -40,9 +40,9 @@ variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
 ####################################
 # Additional Components to include #
 ####################################
-variable OS_INCLUDE_HEAT = false;
-variable OS_INCLUDE_CINDER = false;
-variable OS_INCLUDE_CEILOMETER = false;
+variable OS_HEAT_ENABLED = false;
+variable OS_CINDER_ENABLED = false;
+variable OS_CEILOMETER_ENABLED = false;
 
 
 ###############################
