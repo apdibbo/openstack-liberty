@@ -25,6 +25,7 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/cinder/cinder.conf}';
 'module' = 'tiny';
+'daemons/openstack-cinder-volume' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
