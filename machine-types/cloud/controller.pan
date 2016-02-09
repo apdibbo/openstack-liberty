@@ -13,17 +13,17 @@ include 'personality/nova/config';
 include 'personality/neutron/config';
 include 'features/neutron/network/config';
 include 'personality/dashboard/config';
-include if (OS_INCLUDE_HEAT) {
+include if (OS_HEAT_ENABLED) {
     'personality/heat/config';
 } else {
     null;
 } ;
-include if (OS_INCLUDE_CINDER) {
+include if (OS_CINDER_ENABLED) {
     'personality/cinder/config';
 } else {
     null;
 };
-include if (OS_INCLUDE_CEILOMETER) {
+include if (OS_CEILOMETER_ENABLED) {
     'personality/ceilometer/config';
 } else {
     null;

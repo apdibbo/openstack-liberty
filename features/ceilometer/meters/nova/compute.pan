@@ -20,7 +20,7 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/ceilometer/ceilometer.conf}';
 'module' = 'tiny';
-'daemons/openstack-ceilometer-compute.service'='restart';
+'daemons/openstack-ceilometer-compute'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
@@ -45,7 +45,7 @@ prefix '/software/components/metaconfig/services/{/etc/ceilometer/ceilometer.con
 
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-'daemons/openstack-nova-compute.service'='restart';
+'daemons/openstack-nova-compute'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT/instance_usage_audit' = 'True';

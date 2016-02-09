@@ -40,9 +40,9 @@ variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
 ####################################
 # Additional Components to include #
 ####################################
-variable OS_INCLUDE_HEAT = false;
-variable OS_INCLUDE_CINDER = false;
-variable OS_INCLUDE_CEILOMETER = false;
+variable OS_HEAT_ENABLED = false;
+variable OS_CINDER_ENABLED = false;
+variable OS_CEILOMETER_ENABLED = false;
 
 
 ###############################
@@ -102,6 +102,11 @@ variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
 #############################
 variable OS_MEMCACHE_HOST ?= 'localhost';
 
+#############################
+# MongoDB specfic variable #
+#############################
+variable OS_MONGODB_DBPATH ?= '/var/mongodb';
+
 ##########################
 # Nova specific variable #
 ##########################
@@ -142,6 +147,7 @@ variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
 ############################
 # Cinder specific variable #
 ############################
+
 # Cinder Controller
 variable OS_CINDER_ENABLED ?= false;
 variable OS_CINDER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
@@ -167,6 +173,11 @@ variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
 
+# Cinder Storage
+variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
+variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
+
+
 ##############################
 # RabbitMQ specific variable #
 ##############################
@@ -186,3 +197,21 @@ variable OS_HORIZON_SECRET_KEY ?= error('OS_HORIZON_SECRET_KEY must be defined')
 # Metadata specific variable #
 ##############################
 variable OS_METADATA_HOST ?= OS_NOVA_CONTROLLER_HOST;
+
+###########################
+# CEPH Specific Variables #
+###########################
+variable OS_CEPH ?= false;
+variable OS_CEPH_GLANCE_POOL ?= 'images';
+variable OS_CEPH_GLANCE_USER ?= 'glance';
+variable OS_CEPH_GLANCE_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_CINDER_POOL ?= 'volumes';
+variable OS_CEPH_CINDER_USER ?= 'cinder';
+variable OS_CEPH_CINDER_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_CINDER_BACKUP_POOL ?= 'backups';
+variable OS_CEPH_CINDER_BACKUP_USER ?= 'cinder-backup';
+variable OS_CEPH_CINDER_BACKUP_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_NOVA_POOL ?= 'vms';
+variable OS_CEPH_NOVA_USER ?= 'cinder';
+variable OS_CEPH_NOVA_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_LIBVIRT_SECRET ?= if (OS_CEPH) {error('OS_CEPH_LIBVIRT_SECRET must be defined when OS_CEPH is true');} else {null;};

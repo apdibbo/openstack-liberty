@@ -29,6 +29,7 @@ variable CONTENTS_INIT_SCRIPT = {
 include 'components/filecopy/config';
 prefix '/software/components/filecopy/services';
 '{/root/init.sh}' = dict(
+  'perms' ,'755',
   'config', format(
     CONTENTS_INIT_SCRIPT,
     OS_RABBITMQ_USERNAME,

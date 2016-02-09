@@ -26,8 +26,8 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-#'daemons/openstack-nova-compute'='restart';
-#'daemons/libvirtd'='restart';
+'daemons/openstack-nova-compute'='restart';
+'daemons/libvirtd'='restart';
 
 # [DEFAULT] section
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
@@ -50,7 +50,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [libvirtd] section
-'contents/libvirt/virt_type' = 'kvm';
+'contents/libvirt/virt_type' = 'qemu';
 
 # [neutron] section
 'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';
@@ -82,4 +82,10 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
   } else {
     null;
   };
+};
+
+include if (OS_CEPH) {
+    'features/nova/compute/ceph';
+} else {
+    null;
 };

@@ -28,6 +28,16 @@ prefix '/software/components/mysql';
   SELF[OS_NEUTRON_DB_HOST]['adminpwd'] = OS_DB_ADMIN_PASSWORD;
   SELF[OS_NEUTRON_DB_HOST]['adminuser'] = OS_DB_ADMIN_USERNAME;
   SELF;
+
+  # Cinder server configuration
+  SELF[OS_CINDER_DB_HOST]['adminpwd'] = OS_DB_ADMIN_PASSWORD;
+  SELF[OS_CINDER_DB_HOST]['adminuser'] = OS_DB_ADMIN_USERNAME;
+  SELF;
+
+  # Heat server configuration
+  SELF[OS_HEAT_DB_HOST]['adminpwd'] = OS_DB_ADMIN_PASSWORD;
+  SELF[OS_HEAT_DB_HOST]['adminuser'] = OS_DB_ADMIN_USERNAME;
+  SELF;
 };
 'serviceName' = 'mariadb';
 
@@ -39,6 +49,14 @@ include 'features/mariadb/nova';
 include {
   if (OS_CINDER_ENABLED) {
     'features/mariadb/cinder';
+  } else {
+    null;
+  };
+};
+
+include {
+  if (OS_HEAT_ENABLED) {
+    'features/mariadb/heat';
   } else {
     null;
   };
