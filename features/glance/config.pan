@@ -22,7 +22,7 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
 'module' = 'tiny';
-#'daemons/openstack-glance-api' = 'restart';
+'daemons/openstack-glance-api' = 'restart';
 # [DEFAULT] section
 'contents/DEFAULT/notification_driver' = 'messagingv2';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
@@ -47,8 +47,6 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-api.conf}';
   OS_GLANCE_DB_PASSWORD + '@' +
   OS_GLANCE_DB_HOST + '/glance';
 
-# [glance_store] section
-'contents/glance_store/default_store' = 'file';
 'contents/glance_store/filesystem_store_datadir' = OS_GLANCE_STORE_DIR;
 
 # [keystone_authtoken] section
@@ -92,3 +90,9 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 
 # [paste_deploy] section
 'contents/paste_deploy/flavor' = 'keystone';
+
+include if (OS_CEPH) {
+    'features/glance/ceph';
+} else {
+    'features/glance/file';
+};

@@ -41,3 +41,6 @@ prefix '/software/components/metaconfig/services/{/etc/keystone/keystone.conf}';
 # [token] section
 'contents/token/provider' = 'uuid';
 'contents/token/driver' = 'memcache';
+
+# Configure identity backend
+include 'features/keystone/identity/' + OS_KEYSTONE_IDENTITY_DRIVER;

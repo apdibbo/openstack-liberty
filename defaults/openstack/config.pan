@@ -37,14 +37,6 @@ variable OS_NODE_TYPE ?= 'compute';
 variable OS_LOGGING_TYPE ?= 'file';
 variable OS_AUTH_CLIENT_CONFIG ?= 'features/keystone/client/config';
 
-####################################
-# Additional Components to include #
-####################################
-variable OS_INCLUDE_HEAT = false;
-variable OS_INCLUDE_CINDER = false;
-variable OS_INCLUDE_CEILOMETER = false;
-
-
 ###############################
 # Define OS_CONTROLLER_HOST  #
 ##############################
@@ -80,6 +72,7 @@ variable OS_GLANCE_STORE_DIR ?= '/var/lib/glance/images/';
 variable OS_HEAT_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
 variable OS_HEAT_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_HEAT_DB_HOST ?= OS_DB_HOST;
+variable OS_HEAT_ENABLED ?= false;
 variable OS_HEAT_DB_USERNAME ?= 'heat';
 variable OS_HEAT_DB_PASSWORD ?= 'HEAT_DBPASS';
 variable OS_HEAT_USERNAME ?= 'heat';
@@ -96,11 +89,18 @@ variable OS_KEYSTONE_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_KEYSTONE_DB_HOST ?= OS_DB_HOST;
 variable OS_KEYSTONE_DB_USERNAME ?= 'keystone';
 variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
+variable OS_KEYSTONE_IDENTITY_DRIVER ?= 'sql';
+variable OS_KEYSTONE_IDENTITY_LDAP_PARAMS ?= dict();
 
 #############################
 # Memcache specfic variable #
 #############################
 variable OS_MEMCACHE_HOST ?= 'localhost';
+
+#############################
+# MongoDB specfic variable #
+#############################
+variable OS_MONGODB_DBPATH ?= '/var/mongodb';
 
 ##########################
 # Nova specific variable #
@@ -109,6 +109,9 @@ variable OS_NOVA_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
 variable OS_NOVA_VNC_HOST ?= OS_NOVA_CONTROLLER_HOST;
 variable OS_NOVA_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_NOVA_VNC_PROTOCOL ?= OS_NOVA_CONTROLLER_PROTOCOL;
+variable OS_NOVA_CPU_RATIO ?= 1.0;
+variable OS_NOVA_RAM_RATIO ?= 1.0;
+variable OS_NOVA_VIRT_TYPE ?= 'kvm';
 variable OS_NOVA_DB_HOST ?= OS_DB_HOST;
 variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
@@ -142,6 +145,7 @@ variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
 ############################
 # Cinder specific variable #
 ############################
+
 # Cinder Controller
 variable OS_CINDER_ENABLED ?= false;
 variable OS_CINDER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
@@ -162,10 +166,13 @@ variable OS_CEILOMETER_CONTROLLER_HOST ?= OS_CONTROLLER_HOST;
 variable OS_CEILOMETER_CONTROLLER_PROTOCOL ?= OS_CONTROLLER_PROTOCOL;
 variable OS_CEILOMETER_METERS_ENABLED ?= false;
 variable OS_CEILOMETER_DB_HOST ?= OS_DB_HOST;
+variable OS_CEILOMETER_ENABLED ?= false;
 variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
+
+
 
 ##############################
 # RabbitMQ specific variable #
@@ -181,8 +188,35 @@ variable OS_HORIZON_HOST ?= OS_CONTROLLER_HOST;
 variable OS_HORIZON_ALLOWED_HOSTS ?= list('*');
 variable OS_HORIZON_DEFAULT_ROLE ?= 'users';
 variable OS_HORIZON_SECRET_KEY ?= error('OS_HORIZON_SECRET_KEY must be defined');
+variable OS_HORIZON_DEFAULT_DOMAIN ?= 'default';
+variable OS_HORIZON_KEYSTONE_API_VERSION ?= '3';
+variable OS_HORIZON_MULTIDOMAIN_ENABLED ?= {
+  if (OS_KEYSTONE_IDENTITY_DRIVER == 'sql') {
+    false;
+  } else {
+    true;
+  };
+};
 
 ##############################
 # Metadata specific variable #
 ##############################
 variable OS_METADATA_HOST ?= OS_NOVA_CONTROLLER_HOST;
+
+###########################
+# CEPH Specific Variables #
+###########################
+variable OS_CEPH ?= false;
+variable OS_CEPH_GLANCE_POOL ?= 'images';
+variable OS_CEPH_GLANCE_USER ?= 'glance';
+variable OS_CEPH_GLANCE_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_CINDER_POOL ?= 'volumes';
+variable OS_CEPH_CINDER_USER ?= 'cinder';
+variable OS_CEPH_CINDER_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_CINDER_BACKUP_POOL ?= 'backups';
+variable OS_CEPH_CINDER_BACKUP_USER ?= 'cinder-backup';
+variable OS_CEPH_CINDER_BACKUP_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_NOVA_POOL ?= 'vms';
+variable OS_CEPH_NOVA_USER ?= 'cinder';
+variable OS_CEPH_NOVA_CEPH_CONF ?= '/etc/ceph/ceph.conf';
+variable OS_CEPH_LIBVIRT_SECRET ?= if (OS_CEPH) {error('OS_CEPH_LIBVIRT_SECRET must be defined when OS_CEPH is true');} else {null;};

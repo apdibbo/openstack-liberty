@@ -106,72 +106,139 @@ echo "[DONE] Database configuration"
 echo "[START] service configuration"
 systemctl start openstack-keystone
 echo "  keystone"
-$DEBUG_SERVICES openstack service create --name keystone --description "Openstack Identity" identity
+if openstack service list | grep 'identity' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name keystone --description "Openstack Identity" identity;
+fi
 echo "  glance"
-$DEBUG_SERVICES openstack service create --name glance   --description "OpenStack Image service" image
+if openstack service list | grep 'image' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name glance   --description "OpenStack Image service" image;
+fi
 echo "  nova"
-$DEBUG_SERVICES openstack service create --name nova   --description "OpenStack Compute" compute
+if openstack service list | grep 'compute' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name nova   --description "OpenStack Compute" compute;
+fi
 echo "  neutron"
-$DEBUG_SERVICES openstack service create --name neutron   --description "OpenStack Networking" network
+if openstack service list | grep 'network' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name neutron   --description "OpenStack Networking" network;
+fi
 echo "  heat"
-$DEBUG_SERVICES openstack service create --name heat --description "Orchestration" orchestration
+if openstack service list | grep 'orchestration' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name heat --description "Orchestration" orchestration;
+fi
 echo "  heat cfn"
-$DEBUG_SERVICES openstack service create --name heat-cfn --description "Orchestration"  cloudformation
+if openstack service list | grep 'cloudformation' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name heat-cfn --description "Orchestration"  cloudformation;
+fi
 echo "  cinder volume"
-$DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volume
+if openstack service list | grep 'volume' | grep -v 'volumev2' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volume;
+fi
 echo "  cinder volumev2"
-$DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volumev2
+if openstack service list | grep 'volumev2' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name cinder   --description "OpenStack Block Storage" volumev2;
+fi
 echo "  ceilometer"
-$DEBUG_SERVICES openstack service create --name ceilometer --description "Telemetry" metering
+if openstack service list | grep 'metering' ; then
+    echo ' - already exists';
+else
+    $DEBUG_SERVICES openstack service create --name ceilometer --description "Telemetry" metering;
+fi
 echo "[END] service configuration"
 
 echo "[START] endpoints configuration"
 echo "  Identity endpoint"
 for endpoint_type in $ENDPOINT_TYPES
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $endpoint_type $KEYSTONE_URI/v2.0
+  if openstack endpoint list | grep 'identity' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $endpoint_type $KEYSTONE_URI/v2.0;
+  fi
 done
-$DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $ADMIN_ENDPOINT_TYPE $KEYSTONE_URL/v2.0
+if openstack endpoint list | grep 'identity' | grep $ADMIN_ENDPOINT_TYPE  ; then
+    echo ' - already exists';
+else
+    $DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $ADMIN_ENDPOINT_TYPE $KEYSTONE_URL/v2.0;
+fi
 echo "  Glance endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION image $endpoint_type $GLANCE_URL
+  if openstack endpoint list | grep 'image' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION image $endpoint_type $GLANCE_URL;
+  fi
 done
 echo "  Nova endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION \
-     compute $endpoint_type \
-     $NOVA_URL
+  if openstack endpoint list | grep 'compute' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION compute $endpoint_type $NOVA_URL;
+  fi
 done
 echo "  Neutron endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION \
-     network $endpoint_type \
-     $NEUTRON_URL
+  if openstack endpoint list | grep 'network' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION network $endpoint_type $NEUTRON_URL;
+  fi
 done
 echo "  Heat endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION \
-     orchestration $endpoint_type \
-     $HEAT_ORCHESTRATION_URL
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION \
-     cloudformation $endpoint_type \
-     $HEAT_CLOUDFORMATION_URL
+  if openstack endpoint list | grep 'orchestration' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION orchestration $endpoint_type  $HEAT_ORCHESTRATION_URL;
+  fi
+  if openstack endpoint list | grep 'cloudformation' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION cloudformation $endpoint_type $HEAT_CLOUDFORMATION_URL;
+  fi
 done
 echo "  Cinder endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volume $endpoint_type $CINDER_URL
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volumev2 $endpoint_type $CINDERV2_URL
+  if openstack endpoint list | grep 'volume' | grep -v 'volumev2' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volume $endpoint_type $CINDER_URL;
+  fi
+  if openstack endpoint list | grep 'volumev2' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volumev2 $endpoint_type $CINDERV2_URL;
+  fi
 done
 echo "  Ceilometer endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
 do
-  $DEBUG_ENDPOINTS openstack endpoint create --region $REGION metering $endpoint_type $CEILOMETER_URL
-  2_URL
+  if openstack endpoint list | grep 'metering' | grep $endpoint_type  ; then
+      echo ' - already exists';
+  else
+      $DEBUG_ENDPOINTS openstack endpoint create --region $REGION metering $endpoint_type $CEILOMETER_URL;
+  fi
 done
 echo "[END] endpoints configuration"
 
