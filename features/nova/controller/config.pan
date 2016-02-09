@@ -30,12 +30,12 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'module' = 'tiny';
-#'daemons/openstack-nova-api'='restart';
-#'daemons/openstack-nova-cert'='restart';
-#'daemons/openstack-nova-consoleauth'='restart';
-#'daemons/openstack-nova-scheduler'='restart';
-#'daemons/openstack-nova-conductor'='restart';
-#'daemons/openstack-nova-novncproxy'='restart';
+'daemons/openstack-nova-api'='restart';
+'daemons/openstack-nova-cert'='restart';
+'daemons/openstack-nova-consoleauth'='restart';
+'daemons/openstack-nova-scheduler'='restart';
+'daemons/openstack-nova-conductor'='restart';
+'daemons/openstack-nova-novncproxy'='restart';
 # [DEFAULT] section
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
@@ -77,6 +77,8 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 } else {
   null;
 };
+'contents/DEFAULT/cpu_allocation_ratio' = OS_NOVA_CPU_RATIO;
+'contents/DEFAULT/ram_allocation_ratio' = OS_NOVA_RAM_RATIO;
 
 # [database] section
 'contents/database/connection' = 'mysql://' +

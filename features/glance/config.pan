@@ -94,5 +94,5 @@ prefix '/software/components/metaconfig/services/{/etc/glance/glance-registry.co
 include if (OS_CEPH) {
     'features/glance/ceph';
 } else {
-    null;
+    'features/glance/file';
 };

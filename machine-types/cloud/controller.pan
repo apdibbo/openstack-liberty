@@ -19,7 +19,7 @@ include if (OS_HEAT_ENABLED) {
     null;
 } ;
 include if (OS_CINDER_ENABLED) {
-    'personality/cinder/config';
+    'personality/cinder/controller';
 } else {
     null;
 };

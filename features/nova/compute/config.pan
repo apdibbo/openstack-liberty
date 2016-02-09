@@ -50,7 +50,7 @@ prefix '/software/components/metaconfig/services/{/etc/nova/nova.conf}';
 'contents/keystone_authtoken/password' = OS_NOVA_PASSWORD;
 
 # [libvirtd] section
-'contents/libvirt/virt_type' = 'qemu';
+'contents/libvirt/virt_type' = OS_NOVA_VIRT_TYPE;
 
 # [neutron] section
 'contents/neutron/url' = OS_NEUTRON_CONTROLLER_PROTOCOL + '://' + OS_NEUTRON_CONTROLLER_HOST + ':9696';

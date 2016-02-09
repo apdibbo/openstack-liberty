@@ -10,8 +10,20 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [ "[% allowed.join('","') %]" ]
+
+[% IF multidomain %]
+OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = '[% default_domain %]'
+[% END %]
+
+[% IF keystone.api_version == 3 %]
+OPENSTACK_API_VERSIONS = {
+     "identity": 3
+}
+[% END %]
+
 OPENSTACK_HOST = "[% host %]"
-OPENSTACK_KEYSTONE_URL = "[% keystone.protocol %]://[% keystone.host %]:[% keystone.port %]/v2.0"
+OPENSTACK_KEYSTONE_URL = "[% keystone.protocol %]://[% keystone.host %]:[% keystone.port %]/v[% keystone.api_version %]"
 OPENSTACK_KEYSTONE_DEFAULT_ROLE = "[% role %]"
 
 WEBROOT = '/dashboard/'
@@ -25,6 +37,8 @@ CACHES = {
          'LOCATION': '127.0.0.1:11211',
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

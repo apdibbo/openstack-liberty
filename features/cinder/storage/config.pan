@@ -30,7 +30,8 @@ prefix '/software/components/metaconfig/services/{/etc/cinder/cinder.conf}';
 'contents/DEFAULT/rpc_backend' = 'rabbit';
 'contents/DEFAULT/auth_strategy' = 'keystone';
 'contents/DEFAULT/my_ip' = PRIMARY_IP;
-'contents/DEFAULT/glance_host' = OS_GLANCE_CONTROLLER_HOST;
+#'contents/DEFAULT/glance_host' = OS_GLANCE_CONTROLLER_HOST;
+'contents/DEFAULT/glance_api_servers' = OS_GLANCE_CONTROLLER_PROTOCOL + '://' + OS_GLANCE_CONTROLLER_HOST + ':9292';
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 
 # [keystone_authtoken] section
