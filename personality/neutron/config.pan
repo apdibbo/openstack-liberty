@@ -10,3 +10,11 @@ include { if ((OS_NEUTRON_NETWORK_PROVIDER == OS_NEUTRON_CONTROLLER_HOST) &&
 };
 
 };
+
+include {
+  if (OS_CEILOMETER_METERS_ENABLED) {
+    'features/ceilometer/meters/neutron';
+  } else {
+    null;
+  };
+};
