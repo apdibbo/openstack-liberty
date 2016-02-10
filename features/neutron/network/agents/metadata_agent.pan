@@ -10,6 +10,8 @@ include 'components/metaconfig/config';
 # /etc/neutron/metadata_agent.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/metadata_agent.ini}';
 'module' = 'tiny';
+'daemons/neutron-metadata-agent' = 'restart';
+
 # [DEFAULT] section
 'contents/DEFAULT' = openstack_load_config(OS_AUTH_CLIENT_CONFIG);
 'contents/DEFAULT/username' = OS_NEUTRON_USERNAME;

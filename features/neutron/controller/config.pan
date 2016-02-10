@@ -33,6 +33,12 @@ prefix '/software/components/chkconfig/service';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'module' = 'tiny';
+'daemons/neutron-server' = 'restart';
+'daemons/neutron-dhcp-agent' = 'restart';
+'daemons/neutron-l3-agent' = 'restart';
+'daemons/neutron-metadata-agent' = 'restart';
+'daemons/neutron-linuxbridge-agent' = 'restart';
+
 # [DEFAULT]
 'contents/DEFAULT' = openstack_load_config('features/openstack/logging/' + OS_LOGGING_TYPE);
 'contents/DEFAULT/core_plugin' = 'ml2';

@@ -10,6 +10,8 @@ include 'components/metaconfig/config';
 # /etc/neutron/dhcp_agent.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/dhcp_agent.ini}';
 'module' = 'tiny';
+'daemons/neutron-dhcp-agent' = 'restart';
+
 # [DEFAULT] section
 'contents/DEFAULT/interface_driver' = 'neutron.agent.linux.interface.BridgeInterfaceDriver';
 'contents/DEFAULT/dhcp_driver' = 'neutron.agent.linux.dhcp.Dnsmasq';

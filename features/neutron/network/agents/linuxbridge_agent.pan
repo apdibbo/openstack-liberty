@@ -10,6 +10,7 @@ include 'components/metaconfig/config';
 # /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 prefix '/software/components/metaconfig/services/{/etc/neutron/plugins/ml2/linuxbridge_agent.ini}';
 'module' = 'tiny';
+'daemons/neutron-linuxbridge-agent' = 'restart';
 
 # [linux_bridge] section
 'contents/linux_bridge/physical_interface_mappings' = 'public:' + OS_INTERFACE_MAPPING;

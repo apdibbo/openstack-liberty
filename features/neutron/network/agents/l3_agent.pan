@@ -9,6 +9,8 @@ include 'components/metaconfig/config';
 
 prefix '/software/components/metaconfig/services/{/etc/neutron/l3_agent.ini}';
 'module' = 'tiny';
+'daemons/neutron-l3-agent' = 'restart';
+
 # [DEFAULT]
 'contents/DEFAULT/interface_driver' = 'neutron.agent.linux.interface.BridgeInterfaceDriver';
 'contents/DEFAULT/external_network_bridge' = '';
