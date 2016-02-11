@@ -5,7 +5,7 @@ prefix '/software/components/dirperm';
 'paths' = {
   SELF[length(SELF)] = dict(
     'path', '/var/run/ceph/guests',
-    'owner', 'qemu:libvirtd',
+    'owner', 'qemu:qemu',
     'type', 'd',
     'perm', '0755',
   );
@@ -15,7 +15,7 @@ prefix '/software/components/dirperm';
 'paths' = {
   SELF[length(SELF)] = dict(
     'path', '/var/log/qemu',
-    'owner', 'qemu:libvirtd',
+    'owner', 'qemu:qemu',
     'type', 'd',
     'perm', '0755',
   );
