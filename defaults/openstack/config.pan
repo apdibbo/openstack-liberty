@@ -95,7 +95,7 @@ variable OS_KEYSTONE_IDENTITY_LDAP_PARAMS ?= dict();
 #############################
 # Memcache specfic variable #
 #############################
-variable OS_MEMCACHE_HOST ?= 'localhost';
+variable OS_MEMCACHE_HOSTs ?= list('localhost');
 
 #############################
 # MongoDB specfic variable #
