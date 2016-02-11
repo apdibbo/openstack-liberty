@@ -10,4 +10,7 @@ prefix '/software/components/metaconfig/services/{/etc/neutron/neutron.conf}';
 'daemons/neutron-metadata-agent' = 'restart';
 'daemons/neutron-linuxbridge-agent' = 'restart';
 
-'contents/DEFAULT/notification_driver'='neutron.openstack.common.notifier.rpc_notifier';
+'contents/DEFAULT/notification_driver'='messagingv2';
+'contents/DEFAULT/rpc_backend' = 'rabbit';
+#[oslo_messaging_rabbit] section
+'contents/oslo_messaging_rabbit' = openstack_load_config('features/rabbitmq/client/openstack');
