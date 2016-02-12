@@ -225,3 +225,6 @@ variable OS_CEPH_LIBVIRT_SECRET ?= if (OS_CEPH) {error('OS_CEPH_LIBVIRT_SECRET m
 # HA Specific Variables #
 #########################
 variable OS_HA ?= false;
+variable OS_RABBITMQ_CLUSTER_SECRET ?= if (OS_HA) {error('OS_RABBITMQ_CLUSTER_SECRET must be set for high availability');} else {null;};
+variable OS_RABBITMQ_HOSTS ?= if (OS_HA) {error('OS_RABBITMQ_HOSTS must be set for high availability');} else {null;};
+variable OS_MEMCACHE_HOSTS ?= if (OS_HA) {error('OS_MEMCACHE_HOSTS must be set for high availability');} else {null;};
