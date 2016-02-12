@@ -220,3 +220,8 @@ variable OS_CEPH_NOVA_POOL ?= 'vms';
 variable OS_CEPH_NOVA_USER ?= 'cinder';
 variable OS_CEPH_NOVA_CEPH_CONF ?= '/etc/ceph/ceph.conf';
 variable OS_CEPH_LIBVIRT_SECRET ?= if (OS_CEPH) {error('OS_CEPH_LIBVIRT_SECRET must be defined when OS_CEPH is true');} else {null;};
+
+#########################
+# HA Specific Variables #
+#########################
+variable OS_HA ?= false;
