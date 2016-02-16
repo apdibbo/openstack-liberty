@@ -92,6 +92,7 @@ variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
 variable OS_KEYSTONE_IDENTITY_DRIVER ?= 'sql';
 variable OS_KEYSTONE_IDENTITY_LDAP_PARAMS ?= dict();
 
+
 #############################
 # Memcache specfic variable #
 #############################
@@ -117,6 +118,7 @@ variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
 variable OS_NOVA_USERNAME ?= 'nova';
 variable OS_NOVA_PASSWORD ?= 'NOVA_PASS';
+
 
 #############################
 # Neutron specific variable #
@@ -159,6 +161,7 @@ variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
 variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
 variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
 
+
 ############################
 # Ceilometer specific variable #
 ############################
@@ -171,6 +174,7 @@ variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
+
 
 
 
@@ -230,3 +234,12 @@ variable OS_RABBITMQ_HOSTS ?= if (OS_HA) {error('OS_RABBITMQ_HOSTS must be set f
 variable OS_MEMCACHE_HOSTS ?= if (OS_HA) {error('OS_MEMCACHE_HOSTS must be set for high availability');} else {null;};
 variable OS_FLOATING_IP ?= if (OS_HA) {error('OS_FLOATING_IP must be set for high availability');} else {null;};
 variable OS_LOADBALANCER_MASTER ?= if (OS_HA) {error('OS_LOADBALANCER_MASTER must be set for high availability');} else {null;};
+variable OS_SERVERS ?= if (OS_HA) {error('OS_SERVERS must be set for high availability');} else {null;};
+variable OS_KEYSTONE_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_NOVA_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_NEUTRON_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_CINDER_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_CEILOMETER_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_HEAT_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_GLANCE_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+variable OS_HORIZON_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};

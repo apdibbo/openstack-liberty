@@ -169,12 +169,14 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $endpoint_type $KEYSTONE_URI/v2.0;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $endpoint_type $KEYSTONE_URI/v2.0;"
   fi
 done
 if openstack endpoint list | grep 'identity' | grep $ADMIN_ENDPOINT_TYPE  ; then
     echo ' - already exists';
 else
     $DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $ADMIN_ENDPOINT_TYPE $KEYSTONE_URL/v2.0;
+    echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION identity $ADMIN_ENDPOINT_TYPE $KEYSTONE_URL/v2.0;"
 fi
 echo "  Glance endpoint"
 for endpoint_type in $ENDPOINT_TYPES $ADMIN_ENDPOINT_TYPE
@@ -183,6 +185,7 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION image $endpoint_type $GLANCE_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION image $endpoint_type $GLANCE_URL;"
   fi
 done
 echo "  Nova endpoint"
@@ -192,6 +195,7 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION compute $endpoint_type $NOVA_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION compute $endpoint_type $NOVA_URL;"
   fi
 done
 echo "  Neutron endpoint"
@@ -201,6 +205,7 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION network $endpoint_type $NEUTRON_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION network $endpoint_type $NEUTRON_URL;"
   fi
 done
 echo "  Heat endpoint"
@@ -210,11 +215,13 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION orchestration $endpoint_type  $HEAT_ORCHESTRATION_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION orchestration $endpoint_type  $HEAT_ORCHESTRATION_URL;"
   fi
   if openstack endpoint list | grep 'cloudformation' | grep $endpoint_type  ; then
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION cloudformation $endpoint_type $HEAT_CLOUDFORMATION_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION cloudformation $endpoint_type $HEAT_CLOUDFORMATION_URL;"
   fi
 done
 echo "  Cinder endpoint"
@@ -224,11 +231,13 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volume $endpoint_type $CINDER_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION volume $endpoint_type $CINDER_URL;"
   fi
   if openstack endpoint list | grep 'volumev2' | grep $endpoint_type  ; then
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION volumev2 $endpoint_type $CINDERV2_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION volumev2 $endpoint_type $CINDERV2_URL;"
   fi
 done
 echo "  Ceilometer endpoint"
@@ -238,6 +247,7 @@ do
       echo ' - already exists';
   else
       $DEBUG_ENDPOINTS openstack endpoint create --region $REGION metering $endpoint_type $CEILOMETER_URL;
+      echo "$DEBUG_ENDPOINTS openstack endpoint create --region $REGION metering $endpoint_type $CEILOMETER_URL;"
   fi
 done
 echo "[END] endpoints configuration"
