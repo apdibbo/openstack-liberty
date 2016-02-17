@@ -190,7 +190,7 @@ variable OS_RABBITMQ_PASSWORD ?= 'RABBIT_PASS';
 ###########
 variable OS_HORIZON_HOST ?= OS_CONTROLLER_HOST;
 variable OS_HORIZON_ALLOWED_HOSTS ?= list('*');
-variable OS_HORIZON_DEFAULT_ROLE ?= 'users';
+variable OS_HORIZON_DEFAULT_ROLE ?= 'user';
 variable OS_HORIZON_SECRET_KEY ?= error('OS_HORIZON_SECRET_KEY must be defined');
 variable OS_HORIZON_DEFAULT_DOMAIN ?= 'default';
 variable OS_HORIZON_KEYSTONE_API_VERSION ?= '3';
