@@ -65,6 +65,7 @@ variable OS_GLANCE_DB_PASSWORD ?= 'GLANCE_DBPASS';
 variable OS_GLANCE_USERNAME ?= 'glance';
 variable OS_GLANCE_PASSWORD ?= 'GLANCE_PASS';
 variable OS_GLANCE_STORE_DIR ?= '/var/lib/glance/images/';
+variable OS_GLANCE_PORT = 9292;
 
 ############################
 # Heat specific variable #
@@ -80,6 +81,10 @@ variable OS_HEAT_PASSWORD ?= 'HEAT_PASS';
 variable OS_HEAT_STACK_DOMAIN ?= 'heat';
 variable OS_HEAT_DOMAIN_ADMIN_USERNAME ?= 'heat_domain_admin';
 variable OS_HEAT_DOMAIN_ADMIN_PASSWORD ?= 'HEAT_DOMAIN_ADMIN_PASS';
+variable OS_HEAT_CFN_PORT = 8000;
+variable OS_HEAT_PORT = 8004;
+variable OS_HEAT_PORTS = list(OS_HEAT_PORT,OS_HEAT_CFN_PORT);
+
 
 ##############################
 # Keystone specific variable #
@@ -91,6 +96,10 @@ variable OS_KEYSTONE_DB_USERNAME ?= 'keystone';
 variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
 variable OS_KEYSTONE_IDENTITY_DRIVER ?= 'sql';
 variable OS_KEYSTONE_IDENTITY_LDAP_PARAMS ?= dict();
+variable OS_KEYSTONE_PORT = 5000;
+variable OS_KEYSTONE_ADMIN_PORT = 35357;
+variable OS_KEYSTONE_PORTS = list(OS_KEYSTONE_PORT,OS_KEYSTONE_ADMIN_PORT);
+
 
 
 #############################
@@ -118,6 +127,7 @@ variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
 variable OS_NOVA_USERNAME ?= 'nova';
 variable OS_NOVA_PASSWORD ?= 'NOVA_PASS';
+variable OS_NOVA_PORT ?= 8774;
 
 
 #############################
@@ -143,6 +153,7 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
+variable OS_NEUTRON_PORT = 9696;
 
 ############################
 # Cinder specific variable #
@@ -160,6 +171,8 @@ variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
 # Cinder Storage
 variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
 variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
+variable OS_CINDER_PORT = 8776;
+
 
 
 ############################
@@ -174,6 +187,7 @@ variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
+variable OS_CEILOMETER_PORT = 8777;
 
 
 
@@ -201,6 +215,7 @@ variable OS_HORIZON_MULTIDOMAIN_ENABLED ?= {
     true;
   };
 };
+variable OS_HORIZON_PORT = if (OS_SSL) { port = 443; } else { port = 80};
 
 ##############################
 # Metadata specific variable #

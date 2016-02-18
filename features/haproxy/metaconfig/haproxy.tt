@@ -21,8 +21,8 @@ defaults
     option [% option.value %]
 
     [%- END -%]
-[% FOREACH option IN defaults.options.pairs -%]
-    timeout [% option.key %] [% option.value %]
+[% FOREACH timeout IN defaults.timeouts.pairs -%]
+    timeout [% timeout.key %] [% timeout.value %]
 
     [%- END -%]
 
@@ -37,12 +37,12 @@ listen stats :1936
 [% FOREACH vhost IN vhosts -%]
 listen  [% vhost.name %]
     bind [% vhost.bind %] [% FOREACH option IN vhost.bindoptions -%] [% option.key %] [% option.value %] [%- END -%]
-    
+
 [% FOREACH config IN vhost.config.pairs -%]
     [% config.key %] [% config.value %]
 
     [%- END -%]
-[% FOREACH option IN vhost.options.pairs -%]
+[% FOREACH option IN vhost.options -%]
     option [% option %]
 
     [%- END -%]
