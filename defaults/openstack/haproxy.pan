@@ -5,18 +5,73 @@ include 'defaults/openstack/config';
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/usr/local/bin/haproxy-reload}';
 'module' = 'haproxy-reload';
-'contents/ports' =append(list(OS_NOVA_PORT));
+'contents/ports' =append(list(OS_NOVA_OSAPI_PORT));
+
+########
+# Nova #
+########
 
 prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
 'module' = 'haproxy';
-'contents/vhosts/' = append(dict('name' , 'nova',
-    'port' , OS_NOVA_PORT,
-    'bind' ,  '*:'+to_string(OS_NOVA_PORT),
+'contents/vhosts/' = append(dict('name' , 'nova-osapi',
+    'port' , OS_NOVA_OSAPI_PORT,
+    'bind' ,  '*:'+to_string(OS_NOVA_OSAPI_PORT),
     'config' , dict(
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
+        'inter', '2s',
+        'downinter', '5s',
+        'rise', 3,
+        'fall', 2,
+        'slowstart', '60s',
+        'maxqueue', 128,
+        'weight', 100,),
+    'servers', OS_NOVA_SERVERS,)
+);
+'contents/vhosts/' = append(dict('name' , 'nova-ec2',
+    'port' , OS_NOVA_EC2_PORT,
+    'bind' ,  '*:'+to_string(OS_NOVA_EC2_PORT),
+    'config' , dict(
+        'mode' , 'http',
+        'balance' , 'source',),
+    'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
+    'defaultoptions',dict(
+        'inter', '2s',
+        'downinter', '5s',
+        'rise', 3,
+        'fall', 2,
+        'slowstart', '60s',
+        'maxqueue', 128,
+        'weight', 100,),
+    'servers', OS_NOVA_SERVERS,)
+);
+'contents/vhosts/' = append(dict('name' , 'nova-metadata',
+    'port' , OS_NOVA_METADATA_PORT,
+    'bind' ,  '*:'+to_string(OS_NOVA_METADATA_PORT),
+    'config' , dict(
+        'mode' , 'http',
+        'balance' , 'source',),
+    'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
+    'defaultoptions',dict(
+        'inter', '2s',
+        'downinter', '5s',
+        'rise', 3,
+        'fall', 2,
+        'slowstart', '60s',
+        'maxqueue', 128,
+        'weight', 100,),
+    'servers', OS_NOVA_SERVERS,)
+);
+'contents/vhosts/' = append(dict('name' , 'nova-novnc',
+    'port' , OS_NOVA_NOVNC_PORT,
+    'bind' ,  '*:'+to_string(OS_NOVA_NOVNC_PORT),
+    'config' , dict(
+        'mode' , 'tcp',
+        'balance' , 'source',),
+    'options' , list('tcpka','tcplog'),
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -40,7 +95,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -65,7 +120,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -82,7 +137,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -107,7 +162,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -131,7 +186,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -154,16 +209,23 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
     'bind' , '*:'+to_string(OS_HORIZON_PORT),
     'config' , dict(
         'mode' , 'http',
+        'capture','cookie vgnvisitor= len 32',
+        'cookie', 'SERVERID insert indirect nocache',
+        'rspidel', '^Set-cookie:\ IP=',
         'balance' , 'source',),
-    'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'options' , list('tcpka','httplog','httpchk','forwardfor','httpclose'),
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
+
         'rise', 3,
         'fall', 2,
         'slowstart', '60s',
         'maxqueue', 128,
         'weight', 100,),
+    'serveroptions',dict(
+       'cookie','control',
+    ),
     'servers', OS_HORIZON_SERVERS,)
 );
 
@@ -181,7 +243,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -198,7 +260,7 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
         'mode' , 'http',
         'balance' , 'source',),
     'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,
@@ -220,10 +282,10 @@ prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
     'port' , OS_CEILOMETER_PORT,
     'bind' ,  '*:'+to_string(OS_CEILOMETER_PORT),
     'config' , dict(
-        'mode' , 'http',
+        'mode' , 'tcp',
         'balance' , 'source',),
-    'options' , list('tcpka','httplog','ssl-hello-chk','httpchk'),
-    'serveroptions',dict(
+    'options' , list('tcpka','tcplog','ssl-hello-chk'),
+    'defaultoptions',dict(
         'inter', '2s',
         'downinter', '5s',
         'rise', 3,

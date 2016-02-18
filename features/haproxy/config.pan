@@ -14,7 +14,7 @@ prefix '/software/components/filecopy/services/{/usr/share/templates/quattor/met
 include 'components/metaconfig/config';
 prefix '/software/components/metaconfig/services/{/etc/haproxy/haproxy.cfg}';
 'module' = 'haproxy';
-'daemons/haproxy' = 'reload';
+'daemons/haproxy' = 'restart';
 'contents/global/logs/{/dev/log}' = list('local0','notice');
 'contents/global/config/tune.ssl.default-dh-param' = '2048';
 'contents/global/config/chroot' = '/var/lib/haproxy';

@@ -16,3 +16,7 @@ foreach(k;v;OS_MEMCACHE_HOSTS) {
         hosts;
     };
 };
+
+# [vnc] section
+'contents/vnc/vncserver_listen' = '*';
+'contents/vnc/vncserver_proxyclient_address' = '*';

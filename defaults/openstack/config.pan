@@ -6,6 +6,10 @@ unique template defaults/openstack/config;
 include if_exists('site/openstack/config');
 variable PRIMARY_IP ?= DB_IP[escape(FULL_HOSTNAME)];
 
+variable OS_HA ?= false;
+
+
+
 ############################
 # Active SSL configuration #
 ############################
@@ -81,9 +85,7 @@ variable OS_HEAT_PASSWORD ?= 'HEAT_PASS';
 variable OS_HEAT_STACK_DOMAIN ?= 'heat';
 variable OS_HEAT_DOMAIN_ADMIN_USERNAME ?= 'heat_domain_admin';
 variable OS_HEAT_DOMAIN_ADMIN_PASSWORD ?= 'HEAT_DOMAIN_ADMIN_PASS';
-variable OS_HEAT_CFN_PORT = 8000;
-variable OS_HEAT_PORT = 8004;
-variable OS_HEAT_PORTS = list(OS_HEAT_PORT,OS_HEAT_CFN_PORT);
+
 
 
 ##############################
@@ -96,9 +98,7 @@ variable OS_KEYSTONE_DB_USERNAME ?= 'keystone';
 variable OS_KEYSTONE_DB_PASSWORD ?= 'KEYSTONE_DBPASS';
 variable OS_KEYSTONE_IDENTITY_DRIVER ?= 'sql';
 variable OS_KEYSTONE_IDENTITY_LDAP_PARAMS ?= dict();
-variable OS_KEYSTONE_PORT = 5000;
-variable OS_KEYSTONE_ADMIN_PORT = 35357;
-variable OS_KEYSTONE_PORTS = list(OS_KEYSTONE_PORT,OS_KEYSTONE_ADMIN_PORT);
+
 
 
 
@@ -127,7 +127,7 @@ variable OS_NOVA_DB_USERNAME ?= 'nova';
 variable OS_NOVA_DB_PASSWORD ?= 'NOVA_DBPASS';
 variable OS_NOVA_USERNAME ?= 'nova';
 variable OS_NOVA_PASSWORD ?= 'NOVA_PASS';
-variable OS_NOVA_PORT ?= 8774;
+
 
 
 #############################
@@ -153,7 +153,7 @@ variable OS_NEUTRON_DEFAULT_DHCP_POOL ?= dict(
 );
 variable OS_NEUTRON_DEFAULT_GATEWAY ?= '192.168.0.1';
 variable OS_NEUTRON_DEFAULT_NAMESERVER ?= '192.168.0.1';
-variable OS_NEUTRON_PORT = 9696;
+
 
 ############################
 # Cinder specific variable #
@@ -171,7 +171,7 @@ variable OS_CINDER_PASSWORD ?= 'CINDER_PASS';
 # Cinder Storage
 variable OS_CINDER_STORAGE_HOST ?= OS_CINDER_CONTROLLER_HOST;
 variable OS_CINDER_STORAGE_TYPE ?= 'lvm';
-variable OS_CINDER_PORT = 8776;
+
 
 
 
@@ -187,7 +187,7 @@ variable OS_CEILOMETER_DB_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_DB_PASSWORD ?= 'CEILOMETER_DBPASS';
 variable OS_CEILOMETER_USERNAME ?= 'ceilometer';
 variable OS_CEILOMETER_PASSWORD ?= 'CEILOMETER_PASS';
-variable OS_CEILOMETER_PORT = 8777;
+
 
 
 
@@ -215,7 +215,7 @@ variable OS_HORIZON_MULTIDOMAIN_ENABLED ?= {
     true;
   };
 };
-variable OS_HORIZON_PORT = if (OS_SSL) { port = 443; } else { port = 80};
+
 
 ##############################
 # Metadata specific variable #
@@ -240,21 +240,5 @@ variable OS_CEPH_NOVA_USER ?= 'cinder';
 variable OS_CEPH_NOVA_CEPH_CONF ?= '/etc/ceph/ceph.conf';
 variable OS_CEPH_LIBVIRT_SECRET ?= if (OS_CEPH) {error('OS_CEPH_LIBVIRT_SECRET must be defined when OS_CEPH is true');} else {null;};
 
-#########################
-# HA Specific Variables #
-#########################
-variable OS_HA ?= false;
-variable OS_RABBITMQ_CLUSTER_SECRET ?= if (OS_HA) {error('OS_RABBITMQ_CLUSTER_SECRET must be set for high availability');} else {null;};
-variable OS_RABBITMQ_HOSTS ?= if (OS_HA) {error('OS_RABBITMQ_HOSTS must be set for high availability');} else {null;};
-variable OS_MEMCACHE_HOSTS ?= if (OS_HA) {error('OS_MEMCACHE_HOSTS must be set for high availability');} else {null;};
-variable OS_FLOATING_IP ?= if (OS_HA) {error('OS_FLOATING_IP must be set for high availability');} else {null;};
-variable OS_LOADBALANCER_MASTER ?= if (OS_HA) {error('OS_LOADBALANCER_MASTER must be set for high availability');} else {null;};
-variable OS_SERVERS ?= if (OS_HA) {error('OS_SERVERS must be set for high availability');} else {null;};
-variable OS_KEYSTONE_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_NOVA_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_NEUTRON_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_CINDER_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_CEILOMETER_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_HEAT_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_GLANCE_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
-variable OS_HORIZON_SERVERS ?= if (OS_HA) {OS_SERVERS;} else {null;};
+
+include if (OS_HA) {'defaults/openstack/ha';} else {null;};

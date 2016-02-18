@@ -46,10 +46,10 @@ listen  [% vhost.name %]
     option [% option %]
 
     [%- END -%]
-    default-server port [% vhost.port %] [% FOREACH option IN vhost.serveroptions.pairs -%] [% option.key %] [% option.value %] [%- END -%]
+    default-server port [% vhost.port %] [% FOREACH option IN vhost.defaultoptions.pairs -%] [% option.key %] [% option.value %] [%- END -%]
 
 [% FOREACH server IN vhost.servers.pairs -%]
-    server [% server.key %] [% server.value %]:[% vhost.port %] check
+    server [% server.key %] [% server.value %]:[% vhost.port %] [% FOREACH option IN vhost.serveroptions.pairs -%] [% option.key %] [% option.value %] [%- END -%] check
 
     [%- END -%]
 [%- END -%]
